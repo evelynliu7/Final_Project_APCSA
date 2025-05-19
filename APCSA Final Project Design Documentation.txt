@@ -1,0 +1,35 @@
+﻿Evelyn Liu and Hana Hirata
+Group Name
+Boomerang Fu
+Period 7
+
+
+Project Description
+* Describe the project
+* Functionalities
+* Libraries
+* Additional elements
+
+
+This two player game starts with the players being able to choose their character design. The game works by having each character throw a boomerang which will be able to come back given the condition that there is not a wall between the player and the boomerang. The objective of the game is to have the character “kill” their opponent by successfully throwing a boomerang at them. Each character will have 3 lives throughout the game. 
+There will be multiple maps and rounds as the level progresses. 
+
+
+UML Diagram
+
+
+How does it work?
+* Ex. instructions for which keys to use, how to play the game, game objective
+
+
+Player 1 uses the arrow keys to move their character, while Player 2 uses “WASD” keys to move. Double clicking the up arrow key and the “W” key will allow the players to throw their boomerang. If the boomerang cannot go back to the player because an obstacle is in the way, the boomerang will stop in its path. The player needs to walk back towards it, and once they are near it, they pick it up automatically. Players must stay on the map (ex. avoid holes in the ground). On a player is hit by the other’s boomerang, they lose a life and their hearts will decrease (displayed on-screen).
+
+
+Current Progress
+* Current functionalities
+* Functionalities to be completed 
+
+
+Log
+* Hana:
+* Evelyn:
