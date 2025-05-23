@@ -1,12 +1,12 @@
 public class Player {
 
-  private Boomerang Boomerang
+  private Boomerang Boomerang;
   private int speed; 
   private int lives; 
   private boolean hasBoomerang; 
   private int character; 
   private char[] controls; 
-  private activePowUp PowerUp; 
+  private PowerUp activePowUp;
 
   public Player(int character, char[] controls) {
         this.character = character;
@@ -23,22 +23,23 @@ public class Player {
     }
   }
   
-  public void move(){
-    if (keyCode == UP){
+  void keyPressed(){
+    if (keyCode == controls[0]){ //up
      
     }
-   if (keyCode == DOWN){
+   if (keyCode == controls[1]){ //left
    
     }
-    if (keyCode == LEFT){
+    if (keyCode == controls[2]){ //down
     
     }
-   if (keyCode == RIGHT){
+   if (keyCode == controls[3]){ //right
     
    }
   }
   
   public void throwBoomerang(){}
-  public applyPowerUp()
+  public void applyPowerUp(){}
+  
 
 }

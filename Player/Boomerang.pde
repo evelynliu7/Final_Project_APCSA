@@ -4,6 +4,10 @@ public class Boomerang{
   private color c; 
   private Player owner; 
   
+  public Boomerang(){
+    
+  }
+  
   public void draw(){}
   
   public void move(){}
