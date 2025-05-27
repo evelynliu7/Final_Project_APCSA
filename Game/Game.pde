@@ -11,9 +11,14 @@ void setup(){
 
 void draw(){
   background(153, 222, 138);
-  Player1.move(p1up, p1left, p1down, p1right);
+  if(frameCount % Player1.speed == 0){
+    Player1.move(p1up, p1left, p1down, p1right);
+  }
   Player1.display();
-  Player2.move(p2w, p2a, p2s, p2d);
+  
+  if(frameCount % Player2.speed == 0){
+    Player2.move(p2w, p2a, p2s, p2d);
+  }
   Player2.display();
 }
 
