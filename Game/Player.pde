@@ -1,46 +1,46 @@
 class Player{
-  
-  private PVector pos;
+  public PVector pos;
   private Boomerang PlayerBoomerang;
   private int speed; 
   private int lives; 
   private boolean hasBoomerang; 
   private int character; 
-  private char[] controls; 
+  //private char[] controls; 
   //private PowerUp activePowUp;
 
-  public Player(int character, char[] controls) {
-        this.character = character;
-        this.controls = controls;
-        this.speed = 5;
-        this.lives = 3;
-        this.hasBoomerang = true;
-        PlayerBoomerang = new Boomerang();
+  public Player(int character) {
+    this.pos = new PVector(width/2, height/2);
+    this.PlayerBoomerang = new Boomerang(this, 255);
+    this.speed = 5;
+    this.lives = 3;
+    this.hasBoomerang = true;
+    this.character = character;
+    //this.controls = controls;
   }
   
-  void draw(){
-    circle(0,0,3);
+  void display(){
+    if(character == 1){
+      fill(255);
+      circle(pos.x, pos.y, 10);
+    }
+    else if(character == 2){
+      fill(0);
+      square(pos.x, pos.y, 10);
+    }
+    PlayerBoomerang.display();
+  }
+  
+  void move(boolean up, boolean left, boolean down, boolean right){
+    if(up) pos.y--;
+    if(left) pos.x--;
+    if(down) pos.y++;
+    if(right) pos.x++;
   }
   
   public void die(){
     if (lives == 0){
       
     }
-  }
-  
-  void keyPressed(){
-    if (keyCode == controls[0]){ //up
-     
-    }
-    if (keyCode == controls[1]){ //left
-   
-    }
-    if (keyCode == controls[2]){ //down
-    
-    }
-    if (keyCode == controls[3]){ //right
-    
-   }
   }
   
   public void throwBoomerang(){
