@@ -11,7 +11,7 @@ public class Map{
     levelDisplay(level);
   }
   
-  void draw(){
+  public void display(){
   fill(144,238,144);
   for (PShape obstacle : obstacles){
     shape(obstacle);
@@ -27,6 +27,7 @@ public class Map{
     textSize(16);
     text("Level: " + level, 10, 20);
   }
+  
   public void checkCollision(){
     for (PShape obs : obstacles) {
       float ox = obstacle.getParam("x");

@@ -19,7 +19,7 @@ class Boomerang{
   }
   
   public void move(){
-    
+    //figure out how it comes back bc player will move 
   }
   
   public void animate(){
