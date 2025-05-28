@@ -3,13 +3,6 @@ public class Map{
   private int level; 
   private PVector spawnPoint; 
   
-  public Map(int level, PVector spawn) {
-    this.level = level;
-    this.spawnPoint = spawn;
-    this.obstacles = new ArrayList<PShape>();
-    levelDisplay(level);
-  }
-  
   void draw(){
   fill(144,238,144);
   for (PShape x : obstacles){
