@@ -22,6 +22,7 @@ void draw(){
   }
   if(p1DoubleClick){
     Player1.throwBoomerang();
+    p1DoubleClick = false;
   }
   Player1.display();
   
@@ -30,6 +31,7 @@ void draw(){
   }
   if(p2DoubleClick){
     Player2.throwBoomerang();
+    p2DoubleClick = false;
   }
   Player2.display();
 }
@@ -48,7 +50,7 @@ void keyPressed(){
         firstKeyPressTime_p1 = millis();
       }
       else{
-        if(millis() - firstKeyPressTime_p1 <= 200){
+        if(millis() - firstKeyPressTime_p1 <= 100){
           p1DoubleClick = true;
         }
         else{
@@ -69,7 +71,7 @@ void keyPressed(){
         firstKeyPressTime_p2 = millis();
       }
       else{
-        if(millis() - firstKeyPressTime_p2 <= 200){
+        if(millis() - firstKeyPressTime_p2 <= 100){
           p2DoubleClick = true;
         }
         else{
@@ -84,13 +86,19 @@ void keyPressed(){
 
 void keyReleased(){
   if(key==CODED){
-    if(keyCode==UP) p1up = false;
+    if(keyCode==UP){
+      p1up = false;
+      if(firstKeyPressed_p1) firstKeyPressed_p1 = false;
+    }
     if(keyCode==LEFT) p1left = false;
     if(keyCode==DOWN) p1down = false;
     if(keyCode==RIGHT) p1right = false;
   }
   
-  if (keyCode == 'W') p2w = false;
+  if (keyCode == 'W'){
+    p2w = false;
+    if(firstKeyPressed_p2) firstKeyPressed_p2 = false;
+  }
   if (keyCode == 'A') p2a = false;
   if (keyCode == 'S') p2s = false;
   if (keyCode == 'D') p2d = false;
