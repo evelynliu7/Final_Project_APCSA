@@ -14,6 +14,10 @@ class Boomerang{
     circle(owner.pos.x, owner.pos.y, 3);
   }
   
+  public void updateColor(color newColor){
+    c = newColor;
+  }
+  
   public void move(){
     
   }

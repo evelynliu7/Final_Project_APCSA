@@ -54,7 +54,8 @@ class Player{
   
   public void throwBoomerang(){
     if(hasBoomerang){
-      
+      // JUST TO TEST DOUBLE CLICK WORKS
+      PlayerBoomerang.updateColor(100);
     }
   }
   
