@@ -9,7 +9,7 @@ Player Player2 = new Player(2);
 boolean p2w, p2a, p2s, p2d = false;
 boolean p2DoubleClick = false;
 int firstKeyPressTime_p2 = 0;
-boolean firstKeyPressed_p2 = false;
+boolean firstKeyPressed_p2, firstKeyReleased_p2 = false;
 
 void setup(){
   size(800, 500);
@@ -52,9 +52,9 @@ void keyPressed(){
         firstKeyPressTime_p1 = millis();
       }
       else{
-        println(millis() - firstKeyPressTime_p1);
-        if((millis() - firstKeyPressTime_p1) <= 1000 && firstKeyReleased_p1){
-          println("here");
+        //println(millis() - firstKeyPressTime_p1);
+        if((millis() - firstKeyPressTime_p1) <= 500 && firstKeyReleased_p1){
+          //println("here");
           p1DoubleClick = true;
           firstKeyPressed_p1 = false;
         }
@@ -74,14 +74,17 @@ void keyPressed(){
     //check double click
     if(!firstKeyPressed_p2){
         firstKeyPressed_p2 = true;
+        firstKeyReleased_p2 = false;
         firstKeyPressTime_p2 = millis();
       }
       else{
-        if(millis() - firstKeyPressTime_p2 <= 100){
+        if(millis() - firstKeyPressTime_p2 <= 500 && firstKeyReleased_p2){
           p2DoubleClick = true;
+          firstKeyPressed_p2 = false;
         }
         else{
-          firstKeyPressTime_p2 = millis();
+          if(firstKeyReleased_p2) firstKeyPressTime_p2 = millis();
+          firstKeyReleased_p2 = false;
         }
       }
   }
@@ -105,7 +108,8 @@ void keyReleased(){
   
   if (keyCode == 'W'){
     p2w = false;
-    if(firstKeyPressed_p2) firstKeyPressed_p2 = false;
+    //if(firstKeyPressed_p2) firstKeyPressed_p2 = false;
+    firstKeyReleased_p2 = true;
   }
   if (keyCode == 'A') p2a = false;
   if (keyCode == 'S') p2s = false;
