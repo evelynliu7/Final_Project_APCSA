@@ -3,7 +3,7 @@ Player Player1 = new Player(1);
 boolean p1up, p1left, p1down, p1right = false;
 boolean p1DoubleClick = false;
 int firstKeyPressTime_p1 = 0;
-boolean firstKeyPressed_p1 = false;
+boolean firstKeyPressed_p1, firstKeyReleased_p1 = false;
 
 Player Player2 = new Player(2);
 boolean p2w, p2a, p2s, p2d = false;
@@ -43,18 +43,24 @@ void reset(){
 void keyPressed(){
   if(key==CODED){
     if(keyCode==UP){
+      //println("testing");
       p1up = true;
       //check double click
       if(!firstKeyPressed_p1){
         firstKeyPressed_p1 = true;
+        firstKeyReleased_p1 = false;
         firstKeyPressTime_p1 = millis();
       }
       else{
-        if(millis() - firstKeyPressTime_p1 <= 100){
+        println(millis() - firstKeyPressTime_p1);
+        if((millis() - firstKeyPressTime_p1) <= 1000 && firstKeyReleased_p1){
+          println("here");
           p1DoubleClick = true;
+          firstKeyPressed_p1 = false;
         }
         else{
-          firstKeyPressTime_p1 = millis();
+          if(firstKeyReleased_p1) firstKeyPressTime_p1 = millis();
+          firstKeyReleased_p1 = false;
         }
       }
     }
@@ -89,6 +95,8 @@ void keyReleased(){
     if(keyCode==UP){
       p1up = false;
       if(firstKeyPressed_p1) firstKeyPressed_p1 = false;
+      firstKeyReleased_p1 = true;
+      //println("released");
     }
     if(keyCode==LEFT) p1left = false;
     if(keyCode==DOWN) p1down = false;
