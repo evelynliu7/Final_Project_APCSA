@@ -94,7 +94,7 @@ void keyReleased(){
   if(key==CODED){
     if(keyCode==UP){
       p1up = false;
-      if(firstKeyPressed_p1) firstKeyPressed_p1 = false;
+      //if(firstKeyPressed_p1) firstKeyPressed_p1 = false;
       firstKeyReleased_p1 = true;
       //println("released");
     }
