@@ -45,24 +45,6 @@ void keyPressed(){
     if(keyCode==UP){
       //println("testing");
       p1up = true;
-      //check double click
-      if(!firstKeyPressed_p1){
-        firstKeyPressed_p1 = true;
-        firstKeyReleased_p1 = false;
-        firstKeyPressTime_p1 = millis();
-      }
-      else{
-        //println(millis() - firstKeyPressTime_p1);
-        if((millis() - firstKeyPressTime_p1) <= 500 && firstKeyReleased_p1){
-          //println("here");
-          p1DoubleClick = true;
-          firstKeyPressed_p1 = false;
-        }
-        else{
-          if(firstKeyReleased_p1) firstKeyPressTime_p1 = millis();
-          firstKeyReleased_p1 = false;
-        }
-      }
     }
     if(keyCode==LEFT) p1left = true;
     if(keyCode==DOWN) p1down = true;
@@ -72,25 +54,45 @@ void keyPressed(){
   if (keyCode == 'W'){
     p2w = true;
     //check double click
-    if(!firstKeyPressed_p2){
-        firstKeyPressed_p2 = true;
-        firstKeyReleased_p2 = false;
-        firstKeyPressTime_p2 = millis();
-      }
-      else{
-        if(millis() - firstKeyPressTime_p2 <= 500 && firstKeyReleased_p2){
-          p2DoubleClick = true;
-          firstKeyPressed_p2 = false;
-        }
-        else{
-          if(firstKeyReleased_p2) firstKeyPressTime_p2 = millis();
-          firstKeyReleased_p2 = false;
-        }
-      }
   }
   if (keyCode == 'A') p2a = true;
   if (keyCode == 'S') p2s = true;
   if (keyCode == 'D') p2d = true;
+  
+  if(checkDoubleClick((char)keyCode)){
+    if(key==CODED){
+      p1DoubleClick = true;
+    }
+    else{
+      p2DoubleClick = true;
+    }
+  }
+}
+
+boolean checkDoubleClick(char direction){
+  boolean DoubleClick = false;
+  int firstKeyPressTime = 0;
+  boolean firstKeyPressed = false, firstKeyReleased = false;
+  
+  if(!firstKeyPressed){
+    firstKeyPressed = true;
+    firstKeyReleased = false;
+    firstKeyPressTime = millis();
+  }
+  else{
+    //println(millis() - firstKeyPressTime_p1);
+    if((millis() - firstKeyPressTime) <= 500 && firstKeyReleased){
+      //println("here");
+      DoubleClick = true;
+      firstKeyPressed = false;
+    }
+    else{
+      if(firstKeyReleased) firstKeyPressTime = millis();
+      firstKeyReleased = false;
+    }
+  }
+  
+  return DoubleClick;
 }
 
 void keyReleased(){
