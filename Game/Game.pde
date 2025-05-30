@@ -5,6 +5,7 @@ Player Player1 = new Player(1, arrowKeys);
 char[] WASD = {'w', 'a', 's', 'd'};
 Player Player2 = new Player(2, WASD );
 
+Map map = new Map(0);
 
 void setup(){
   size(800, 500);
@@ -56,7 +57,7 @@ void checkDoubleClick(char directionKey, Player p){
   }
   else{
     //println(millis() - firstKeyPressTime_p1);
-    if(millis() - p.getKeyTime() <= 500 && p.getKeyReleased()){
+    if(millis() - p.getKeyTime() <= 200 && p.getKeyReleased()){
       //println("here");
       DoubleClick = true;
       p.setKeyPressed(false);
