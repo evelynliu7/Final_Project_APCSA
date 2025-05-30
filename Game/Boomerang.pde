@@ -16,11 +16,12 @@ class Boomerang{
   
   public void display(){
     fill(c);
-    circle(owner.pos.x, owner.pos.y, 3);
+    circle(owner.pos.x, owner.pos.y, 5);
   }
   
   public void updateColor(color newColor){
-    c = newColor;
+    c += newColor;
+    c%=256;
   }
   
   public void move(){
