@@ -2,8 +2,8 @@ public class Map{
   private ArrayList<PShape> obstacles; 
   private int level; 
   private PVector spawnPoint; 
-  
-
+  private 
+//grid background 2d array ones and negative ones for holes and walls
   public Map(int level, PVector spawn) {
     this.level = level;
     this.spawnPoint = spawn;
@@ -50,5 +50,5 @@ public class Map{
       }
     }
   }
-
-}
+ }
+   
