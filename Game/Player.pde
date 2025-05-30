@@ -5,17 +5,21 @@ class Player{
   private int lives; 
   private boolean hasBoomerang; 
   private int character; 
-  //private char[] controls; 
+  private char[] controls; 
   //private PowerUp activePowUp;
+  private boolean up = false, left = false, down = false, right = false;
+  
+  private int firstKeyPressTime = 0;
+  private boolean firstKeyPressed = false, firstKeyReleased = false;
 
-  public Player(int character) {
+  public Player(int character, char[] controls) {
     this.pos = new PVector(400, 250);
     this.PlayerBoomerang = new Boomerang(this, 255);
     this.speed = 2;
     this.lives = 3;
     this.hasBoomerang = true;
     this.character = character;
-    //this.controls = controls;
+    this.controls = controls;
   }
   
   void display(){
@@ -35,7 +39,20 @@ class Player{
     PlayerBoomerang.display();
   }
   
-  void move(boolean up, boolean left, boolean down, boolean right){
+  void setUP(boolean b){
+    up = b;
+  }
+  void setLEFT(boolean b){
+    left = b;
+  }
+  void setDOWN(boolean b){
+    down = b;
+  }
+  void setRIGHT(boolean b){
+    right = b;
+  }
+  
+  void move(){
     if(up) pos.y--;
     if(left) pos.x--;
     if(down) pos.y++;
@@ -46,16 +63,37 @@ class Player{
     pos.y += height; pos.y %= height;
   }
   
-  public void die(){
-    if (lives == 0){
-      
-    }
+  int getKeyTime(){
+    return firstKeyPressTime;
+  }
+  void setKeyTime(int t){
+    firstKeyPressTime = t;
   }
   
-  public void throwBoomerang(){
+  boolean getKeyPressed(){
+    return firstKeyPressed;
+  }
+  void setKeyPressed(boolean b){
+    firstKeyPressed = b;
+  }
+  
+  boolean getKeyReleased(){
+    return firstKeyReleased;
+  }
+  void setKeyReleased(boolean b){
+    firstKeyReleased = b;
+  }
+  
+  public void throwBoomerang(char dir){
     if(hasBoomerang){
       // JUST TO TEST DOUBLE CLICK WORKS
       PlayerBoomerang.updateColor(100);
+    }
+  }
+  
+  public void die(){
+    if (lives == 0){
+      
     }
   }
   

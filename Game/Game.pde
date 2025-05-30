@@ -1,15 +1,10 @@
 //main class
-Player Player1 = new Player(1);
-boolean p1up, p1left, p1down, p1right = false;
-boolean p1DoubleClick = false;
-int firstKeyPressTime_p1 = 0;
-boolean firstKeyPressed_p1 = false;
+char[] arrowKeys = {(char)UP, (char)LEFT, (char)DOWN, (char)RIGHT};
+Player Player1 = new Player(1, arrowKeys);
 
-Player Player2 = new Player(2);
-boolean p2w, p2a, p2s, p2d = false;
-boolean p2DoubleClick = false;
-int firstKeyPressTime_p2 = 0;
-boolean firstKeyPressed_p2 = false;
+char[] WASD = {'w', 'a', 's', 'd'};
+Player Player2 = new Player(2, WASD );
+
 
 void setup(){
   size(800, 500);
@@ -18,21 +13,15 @@ void setup(){
 void draw(){
   background(153, 222, 138);
   if(frameCount % Player1.speed == 0){
-    Player1.move(p1up, p1left, p1down, p1right);
+    Player1.move();
   }
-  if(p1DoubleClick){
-    Player1.throwBoomerang();
-    p1DoubleClick = false;
-  }
+  
   Player1.display();
   
   if(frameCount % Player2.speed == 0){
-    Player2.move(p2w, p2a, p2s, p2d);
+    Player2.move();
   }
-  if(p2DoubleClick){
-    Player2.throwBoomerang();
-    p2DoubleClick = false;
-  }
+  
   Player2.display();
 }
 
@@ -42,64 +31,66 @@ void reset(){
 
 void keyPressed(){
   if(key==CODED){
-    if(keyCode==UP){
-      p1up = true;
-      //check double click
-      if(!firstKeyPressed_p1){
-        firstKeyPressed_p1 = true;
-        firstKeyPressTime_p1 = millis();
-      }
-      else{
-        if(millis() - firstKeyPressTime_p1 <= 100){
-          p1DoubleClick = true;
-        }
-        else{
-          firstKeyPressTime_p1 = millis();
-        }
-      }
-    }
-    if(keyCode==LEFT) p1left = true;
-    if(keyCode==DOWN) p1down = true;
-    if(keyCode==RIGHT) p1right = true;
+    if(keyCode==UP) Player1.setUP(true);
+    if(keyCode==LEFT) Player1.setLEFT(true);
+    if(keyCode==DOWN) Player1.setDOWN(true);
+    if(keyCode==RIGHT) Player1.setRIGHT(true);
   }
   
-  if (keyCode == 'W'){
-    p2w = true;
-    //check double click
-    if(!firstKeyPressed_p2){
-        firstKeyPressed_p2 = true;
-        firstKeyPressTime_p2 = millis();
-      }
-      else{
-        if(millis() - firstKeyPressTime_p2 <= 100){
-          p2DoubleClick = true;
-        }
-        else{
-          firstKeyPressTime_p2 = millis();
-        }
-      }
+  if (keyCode == 'W') Player2.setUP(true);
+  if (keyCode == 'A') Player2.setLEFT(true);
+  if (keyCode == 'S') Player2.setDOWN(true);
+  if (keyCode == 'D') Player2.setRIGHT(true);
+  
+  checkDoubleClick((char)keyCode, Player1);
+  checkDoubleClick((char)keyCode, Player2);
+}
+
+void checkDoubleClick(char directionKey, Player p){
+  boolean DoubleClick = false;
+    
+  if(!p.getKeyPressed()){
+    p.setKeyPressed(true);
+    p.setKeyReleased(false);
+    p.setKeyTime(millis());
   }
-  if (keyCode == 'A') p2a = true;
-  if (keyCode == 'S') p2s = true;
-  if (keyCode == 'D') p2d = true;
+  else{
+    //println(millis() - firstKeyPressTime_p1);
+    if(millis() - p.getKeyTime() <= 500 && p.getKeyReleased()){
+      //println("here");
+      DoubleClick = true;
+      p.setKeyPressed(false);
+    }
+    else{
+      if(p.getKeyReleased()) p.setKeyTime(millis());
+      p.setKeyReleased(false);
+    }
+  }
+  
+  if(DoubleClick){
+    p.throwBoomerang(directionKey);
+  }
+  
 }
 
 void keyReleased(){
   if(key==CODED){
     if(keyCode==UP){
-      p1up = false;
-      if(firstKeyPressed_p1) firstKeyPressed_p1 = false;
+      Player1.setUP(false);
     }
-    if(keyCode==LEFT) p1left = false;
-    if(keyCode==DOWN) p1down = false;
-    if(keyCode==RIGHT) p1right = false;
+    if(keyCode==LEFT) Player1.setLEFT(false);
+    if(keyCode==DOWN) Player1.setDOWN(false);
+    if(keyCode==RIGHT) Player1.setRIGHT(false);
+    Player1.setKeyReleased(true);
+  }
+  else{
+    if (keyCode == 'W'){
+      Player2.setUP(false);
+    }
+    if (keyCode == 'A') Player2.setLEFT(false);
+    if (keyCode == 'S') Player2.setDOWN(false);
+    if (keyCode == 'D') Player2.setRIGHT(false);
+    Player2.setKeyReleased(true);
   }
   
-  if (keyCode == 'W'){
-    p2w = false;
-    if(firstKeyPressed_p2) firstKeyPressed_p2 = false;
-  }
-  if (keyCode == 'A') p2a = false;
-  if (keyCode == 'S') p2s = false;
-  if (keyCode == 'D') p2d = false;
 }
