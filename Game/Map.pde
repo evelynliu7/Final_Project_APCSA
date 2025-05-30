@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-public class Map{
-  private ArrayList<PShape> obstacles; 
-  private int level; 
-  private PVector spawnPoint; 
-  private 
-//grid background 2d array ones and negative ones for holes and walls
-  public Map(int level, PVector spawn) {
-    this.level = level;
-    this.spawnPoint = spawn;
-    this.obstacles = new ArrayList<PShape>();
-    levelDisplay(level);
-  }
-=======
 //public class Map{
 //  private ArrayList<PShape> obstacles; 
 //  private int level; 
@@ -24,7 +10,6 @@ public class Map{
 //    this.obstacles = new ArrayList<PShape>();
 //    levelDisplay(level);
 //  }
->>>>>>> dfce72e99d97b49d208d6bf9d2997e28a99196bb
   
 //  public void display(){
 //  fill(144,238,144);
@@ -56,19 +41,6 @@ public class Map{
 //     }
 //    /*  Figure out what is collision for
     
-<<<<<<< HEAD
-    if (boomerangPos.x > x && boomerangPos.x < x + w &&
-       boomerangPos.y > y && boomerangPos.y < y + h) {
-        boomerangVel.x *= -1;
-        boomerangVel.y *= -1;
-        return;
-        */
-      }
-    }
-  }
- }
-   
-=======
 //    if (boomerangPos.x > x && boomerangPos.x < x + w &&
 //       boomerangPos.y > y && boomerangPos.y < y + h) {
 //        boomerangVel.x *= -1;
@@ -80,4 +52,3 @@ public class Map{
 //  }
 
 //}
->>>>>>> dfce72e99d97b49d208d6bf9d2997e28a99196bb
