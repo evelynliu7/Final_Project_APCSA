@@ -24,6 +24,7 @@ void draw(){
     text("BOOMERANG", 30, 175);
     text("FU", 145, 225);
   }
+<<<<<<< HEAD
   else {
     background(153, 222, 138);
     //make background specific map
@@ -42,6 +43,24 @@ void draw(){
     
     Player2.display();
   }
+=======
+  
+  Player1.PlayerBoomerang.move();  
+  Player1.display();
+  Player1.PlayerBoomerang.display();  
+  
+  Player1.display();
+  
+  if(frameCount % Player2.speed == 0){
+    Player2.move();
+  }
+  
+  Player2.PlayerBoomerang.move();   
+  Player2.display();
+  Player2.PlayerBoomerang.display();
+  
+  Player2.display();
+>>>>>>> Hanahirata
 }
 
 void reset(){
