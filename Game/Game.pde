@@ -5,25 +5,43 @@ Player Player1 = new Player(1, arrowKeys);
 char[] WASD = {'w', 'a', 's', 'd'};
 Player Player2 = new Player(2, WASD );
 
-Map map = new Map(0);
+int screen=1;
+ArrayList<Map> maps;
+
+PFont f;
 
 void setup(){
   size(800, 500);
+  //maps.add(new Map(1));
+  f=createFont("Showcard Gothic", 24);
 }
 
 void draw(){
-  background(153, 222, 138);
-  if(frameCount % Player1.speed == 0){
-    Player1.move();
+  if (screen==0) {
+    //home screen
+    textFont(f, 50);
+    textAlign(LEFT);
+    text("BOOMERANG", 30, 175);
+    text("FU", 145, 225);
   }
-  
-  Player1.display();
-  
-  if(frameCount % Player2.speed == 0){
-    Player2.move();
+  else {
+    background(153, 222, 138);
+    //make background specific map
+    //Map currMap = maps.get(screen-1);
+    //currMap.display();
+    
+    if(frameCount % Player1.speed == 0){
+      Player1.move();
+    }
+    
+    Player1.display();
+    
+    if(frameCount % Player2.speed == 0){
+      Player2.move();
+    }
+    
+    Player2.display();
   }
-  
-  Player2.display();
 }
 
 void reset(){
@@ -94,4 +112,10 @@ void keyReleased(){
     Player2.setKeyReleased(true);
   }
   
+}
+
+void mouseClicked() {
+  //make button class; stores top-left corner, width, height
+  //check which button mouse is cliking on
+  //update screen variable
 }
