@@ -1,10 +1,9 @@
 class Map{
-  private ArrayList<PShape> obstacles; 
+  private ArrayList<PShape> obstacles;
   private int level; 
-  private int[][] layout;
-  private PVector spawnPoint; 
+  private int[][] layout; //-1 wall, 0 holes, 1
+  //private PVector spawnPoint; 
   
-
   public Map(int level){
     this.level = level;
     //this.spawnPoint = spawn;
@@ -12,6 +11,7 @@ class Map{
   }
   
   public void display(){
+    levelDisplay();
     fill(144,238,144);
     for (PShape obstacle : obstacles){
       shape(obstacle);

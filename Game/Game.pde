@@ -6,13 +6,14 @@ char[] WASD = {'w', 'a', 's', 'd'};
 Player Player2 = new Player(2, WASD );
 
 int screen=1;
-ArrayList<Map> maps;
+ArrayList<Map> maps = new ArrayList<Map>();
 
 PFont f;
 
 void setup(){
   size(800, 500);
-  //maps.add(new Map(1));
+  Map mazeMap = new Map(1);
+  maps.add(0, mazeMap);
   f=createFont("Showcard Gothic", 24);
 }
 
@@ -27,8 +28,8 @@ void draw(){
   else {
     background(153, 222, 138);
     //make background specific map
-    //Map currMap = maps.get(screen-1);
-    //currMap.display();
+    Map currMap = maps.get(screen-1);
+    currMap.display();
     
     if(frameCount % Player1.speed == 0){
       Player1.move();
