@@ -84,11 +84,32 @@ class Player{
     firstKeyReleased = b;
   }
   
+  public void setHasBoomerang(boolean b){
+    hasBoomerang = b;
+  }
+
+  public boolean hasBoomerang(){
+    return hasBoomerang;
+  }
   public void throwBoomerang(char dir){
     if(hasBoomerang){
-      // JUST TO TEST DOUBLE CLICK WORKS
-      PlayerBoomerang.updateColor(100);
+    hasBoomerang = false;
+    PlayerBoomerang.timer = 0;
+    PlayerBoomerang.returning = false;
+
+    float speed = 10;
+
+    if(dir == 'w' || dir == 'W' || dir == UP){
+      PlayerBoomerang.velocity = new PVector(0, -speed);
+    } else if(dir == 'a' || dir == 'A' || dir == LEFT){
+      PlayerBoomerang.velocity = new PVector(-speed, 0);
+    } else if(dir == 's' || dir == 'S' || dir == DOWN){
+      PlayerBoomerang.velocity = new PVector(0, speed);
+    } else if(dir == 'd' || dir == 'D' || dir == RIGHT){
+      PlayerBoomerang.velocity = new PVector(speed, 0);
     }
+    PlayerBoomerang.location = pos.copy(); 
+  }
   }
   
   public void die(){
