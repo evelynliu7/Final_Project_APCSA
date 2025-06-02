@@ -5,8 +5,9 @@ Player Player1 = new Player(1, arrowKeys);
 char[] WASD = {'w', 'a', 's', 'd'};
 Player Player2 = new Player(2, WASD );
 
-int screen=1;
+int screen=0;
 ArrayList<Map> maps = new ArrayList<Map>();
+Button start = new Button(500, 150, 100, 200, "START");
 
 PFont f;
 
@@ -20,10 +21,13 @@ void setup(){
 void draw(){
   if (screen==0) {
     //home screen
+    background(153, 222, 138);
     textFont(f, 50);
     textAlign(LEFT);
     text("BOOMERANG", 30, 175);
     text("FU", 145, 225);
+    
+    start.display();
   }
   else {
     background(153, 222, 138);
@@ -43,7 +47,9 @@ void draw(){
       Player2.move();
     }
     
+    Player2.PlayerBoomerang.move();
     Player2.display();
+    Player2.PlayerBoomerang.display();
   }
 }
 
@@ -121,4 +127,8 @@ void mouseClicked() {
   //make button class; stores top-left corner, width, height
   //check which button mouse is cliking on
   //update screen variable
+  
+  if(start.clicked(mouseX, mouseY)){
+    screen = 1;
+  }
 }
