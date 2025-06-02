@@ -17,7 +17,6 @@ public class Button{
     rect(upperX, upperY, w, l, 28);
     fill(0);
     text(text, 30, upperX+w/2, upperY+l/2);
-    noFill();
   }
   
   public boolean clicked(int mx, int my){
