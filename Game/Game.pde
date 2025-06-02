@@ -35,7 +35,9 @@ void draw(){
       Player1.move();
     }
     
+    Player1.PlayerBoomerang.move();
     Player1.display();
+    Player1.PlayerBoomerang.display();  
     
     if(frameCount % Player2.speed == 0){
       Player2.move();
