@@ -7,14 +7,19 @@ Player Player2 = new Player(2, WASD );
 
 int screen=0;
 ArrayList<Map> maps = new ArrayList<Map>();
-Button start = new Button(500, 150, 100, 200, "START");
+Button start, home, rematch, directions;
 
 PFont f;
 
 void setup(){
   size(800, 500);
-  Map mazeMap = new Map(1);
+  
+  Map mazeMap = new Map(2); //game maze
   maps.add(0, mazeMap);
+  start = new Button(500, 150, 100, 200, "START", 20);
+  directions = new Button(500, 275, 100, 200, "DIRECTIONS", 15);
+  
+  
   f=createFont("Showcard Gothic", 24);
 }
 
@@ -28,11 +33,16 @@ void draw(){
     text("FU", 145, 225);
     
     start.display();
+    directions.display();
+  }
+  else if(screen == 1){
+    background(255);
+    text("Directions:", 400, 10);
   }
   else {
     background(153, 222, 138);
     //make background specific map
-    Map currMap = maps.get(screen-1);
+    Map currMap = maps.get(screen-2);
     currMap.display();
     
     if(frameCount % Player1.speed == 0){
@@ -130,7 +140,10 @@ void mouseClicked() {
   //check which button mouse is cliking on
   //update screen variable
   
-  if(start.clicked(mouseX, mouseY)){
+  if(start.clicked(mouseX, mouseY) && screen==0){
+    screen = 2;
+  }
+  if(directions.clicked(mouseX, mouseY) && screen ==0){
     screen = 1;
   }
 }
