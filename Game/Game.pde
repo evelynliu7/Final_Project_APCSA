@@ -5,7 +5,7 @@ Player Player1 = new Player(1, arrowKeys);
 char[] WASD = {'w', 'a', 's', 'd'};
 Player Player2 = new Player(2, WASD );
 
-int screen=1;
+int screen=0;
 ArrayList<Map> maps = new ArrayList<Map>();
 
 PFont f;
@@ -43,7 +43,10 @@ void draw(){
       Player2.move();
     }
     
+    Player2.PlayerBoomerang.move();
     Player2.display();
+    Player2.PlayerBoomerang.display();  
+    
   }
 }
 
