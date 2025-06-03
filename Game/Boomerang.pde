@@ -19,10 +19,12 @@ class Boomerang{
     pushMatrix();
     translate(location.x, location.y);
     rotate(spinAngle);
+    
     fill(c);
     circle(0, 0, 10);        
     stroke(255, 0, 0);
     strokeWeight(2);
+    
     line(0, 0, 5, 0);        
     noStroke();
     popMatrix();

@@ -112,6 +112,24 @@ class Player{
   }
   }
   
+  public PVector getpos(){
+    return pos;
+  }
+  public void checkHit(Player other){
+    if (other.getpos().equals(PlayerBoomerang.location)){
+      other.updateLives();
+      other.slowDown(); 
+      
+    }
+  }
+  
+  public void slowDown(){
+    //for like 5 seconds make it slower 
+    
+  }
+  public void updateLives(){
+    lives--; 
+  }
   public void die(){
     if (lives == 0){
       
