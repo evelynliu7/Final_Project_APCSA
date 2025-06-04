@@ -30,6 +30,7 @@ class Player{
     
     if(character == 1){
       fill(255);
+      stroke(255);
       circle(pos.x, pos.y, 10);
     }
     else if(character == 2){
