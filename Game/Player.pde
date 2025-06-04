@@ -8,6 +8,9 @@ class Player{
   private char[] controls; 
   //private PowerUp activePowUp;
   private boolean up = false, left = false, down = false, right = false;
+  private boolean isSlowed = false;
+  private int slowStartFrame = 0;
+  private int slowDurationFrames = 300; // 5 seconds at 60 FPS
   
   private int firstKeyPressTime = 0;
   private boolean firstKeyPressed = false, firstKeyReleased = false;
@@ -92,6 +95,11 @@ class Player{
     return hasBoomerang;
   }
   public void throwBoomerang(char dir){
+    if(isSlowed && frameCount - slowStartFrame > slowDurationFrames){
+    isSlowed = false;
+    speed = 2; // brings the speed back
+  }
+  
     if(hasBoomerang){
     hasBoomerang = false;
     PlayerBoomerang.timer = 0;
@@ -125,7 +133,9 @@ class Player{
   
   public void slowDown(){
     //for like 5 seconds make it slower 
-    
+    isSlowed = true;
+    slowStartFrame = frameCount;
+    speed = 1;
   }
   public void updateLives(){
     lives--; 
