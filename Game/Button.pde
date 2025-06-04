@@ -16,6 +16,8 @@ public class Button{
   
   public void display(){
     fill(255);
+    stroke(0);
+    strokeWeight(1);
     rect(upperX, upperY, w, h, 28);
     fill(0);
     textAlign(CENTER, CENTER);

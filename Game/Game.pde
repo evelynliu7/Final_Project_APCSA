@@ -18,7 +18,7 @@ void setup(){
   maps.add(0, mazeMap);
   start = new Button(500, 150, 100, 200, "START", 20);
   directions = new Button(500, 275, 100, 200, "DIRECTIONS", 15);
-  
+  home = new Button(700, 425, 50, 75, "HOME", 15);
   
   f=createFont("Showcard Gothic", 24);
 }
@@ -35,11 +35,15 @@ void draw(){
     start.display();
     directions.display();
   }
-  else if(screen == 1){
+  else if(screen == 1){ //directions
     background(255);
     text("Directions:", 400, 10);
+    
+    text("Welcome to Boomerang Fu, an interactive two-player game!", 400, 40);
+    home.display();
   }
   else {
+    
     background(153, 222, 138);
     //make background specific map
     Map currMap = maps.get(screen-2);
@@ -61,7 +65,9 @@ void draw(){
     Player2.display();
 
     Player2.PlayerBoomerang.display();  
-   
+    
+    home.display();
+    
   }
 }
 
@@ -139,11 +145,19 @@ void mouseClicked() {
   //make button class; stores top-left corner, width, height
   //check which button mouse is cliking on
   //update screen variable
+  if(screen==0){
+    if(start.clicked(mouseX, mouseY)){
+      screen = 2;
+    }
+    if(directions.clicked(mouseX, mouseY)){
+      screen = 1;
+    }
+  }
   
-  if(start.clicked(mouseX, mouseY) && screen==0){
-    screen = 2;
+  if(screen!=0){
+    if(home.clicked(mouseX, mouseY)){
+      screen = 0;
+    }
   }
-  if(directions.clicked(mouseX, mouseY) && screen ==0){
-    screen = 1;
-  }
+  
 }
