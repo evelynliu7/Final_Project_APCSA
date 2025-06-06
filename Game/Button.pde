@@ -15,11 +15,11 @@ public class Button{
   }
   
   public void display(){
-    fill(255);
-    stroke(0);
-    strokeWeight(1);
+    fill(255, 157, 149);
+    stroke(255);
+    strokeWeight(3);
     rect(upperX, upperY, w, h, 28);
-    fill(0);
+    fill(255);
     textAlign(CENTER, CENTER);
     textSize(txtSize);
     text(text, upperX+(w/2), upperY+(h/2));

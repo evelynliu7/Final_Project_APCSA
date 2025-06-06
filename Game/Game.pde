@@ -5,16 +5,16 @@ Player Player1 = new Player(1, arrowKeys);
 char[] WASD = {'w', 'a', 's', 'd'};
 Player Player2 = new Player(2, WASD );
 
-int screen=0;
+int screen=2;
 ArrayList<Map> maps = new ArrayList<Map>();
 Button start, home, rematch, directions;
-
+boolean drawn=false;
 PFont f;
 
 void setup(){
   size(800, 500);
   
-  Map mazeMap = new Map(2); //game maze
+  Map mazeMap = new MazeMap(); //game maze
   maps.add(0, mazeMap);
   start = new Button(500, 150, 100, 200, "START", 20);
   directions = new Button(500, 275, 100, 200, "DIRECTIONS", 15);
@@ -26,9 +26,10 @@ void setup(){
 void draw(){
   if (screen==0) {
     //home screen
-    background(153, 222, 138);
+    background(255, 212, 184);
     textFont(f, 50);
     textAlign(LEFT);
+    fill(255, 102, 125);
     text("BOOMERANG", 30, 175);
     text("FU", 145, 225);
     
@@ -36,18 +37,20 @@ void draw(){
     directions.display();
   }
   else if(screen == 1){ //directions
-    background(255);
+    background(255, 240, 217);
+    fill(255, 157, 149);
     text("Directions:", 400, 10);
     
     text("Welcome to Boomerang Fu, an interactive two-player game!", 400, 40);
     home.display();
   }
-  else {
+  else{
     
-    background(153, 222, 138);
+    background(221, 237, 196);
     //make background specific map
     Map currMap = maps.get(screen-2);
     currMap.display();
+   
     
     if(frameCount % Player1.speed == 0){
       Player1.move();
@@ -55,7 +58,10 @@ void draw(){
     
     Player1.PlayerBoomerang.move();
     Player1.display();
-    Player1.PlayerBoomerang.display();  
+    Player1.PlayerBoomerang.display();
+    Player1.displayLives();
+    currMap.checkCollision(Player1.getpos());
+    currMap.checkCollision(Player1.PlayerBoomerang.getLocation());
     
     if(frameCount % Player2.speed == 0){
       Player2.move();
@@ -63,8 +69,10 @@ void draw(){
     
     Player2.PlayerBoomerang.move();
     Player2.display();
-
-    Player2.PlayerBoomerang.display();  
+    Player2.PlayerBoomerang.display();
+    Player2.displayLives();
+    currMap.checkCollision(Player2.getpos());
+    currMap.checkCollision(Player2.PlayerBoomerang.getLocation());
     
     home.display();
     

@@ -67,4 +67,8 @@ class Boomerang{
   public void animate(){
     spinAngle += 0.3;
   }
+  
+  public PVector getLocation(){
+    return location;
+  }
 }

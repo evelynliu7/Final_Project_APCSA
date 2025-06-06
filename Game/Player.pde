@@ -125,10 +125,9 @@ class Player{
     return pos;
   }
   public void checkHit(Player other){
-    if (other.getpos().equals(PlayerBoomerang.location)){
+    if (other.getpos().equals(PlayerBoomerang.getLocation())){
       other.updateLives();
-      other.slowDown(); 
-      
+      other.slowDown();
     }
   }
   
@@ -140,6 +139,16 @@ class Player{
   }
   public void updateLives(){
     lives--; 
+  }
+  public void displayLives(){
+    textSize(18);
+    fill(255, 102, 125);
+    if(controls[0]=='w'){
+      text("Player 2's lives: " + lives, 710, 490);
+    }
+    else{
+      text("Player 1's lives: " + lives, 90, 490);
+    }
   }
   public void die(){
     if (lives == 0){

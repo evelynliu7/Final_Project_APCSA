@@ -8,18 +8,20 @@ class Map{
     this.level = level;
     //this.spawnPoint = spawn;
     this.obstacles = new ArrayList<PShape>();
+    createMap();
   }
   
   public void display(){
-    levelDisplay();
-    fill(144,238,144);
     for (PShape obstacle : obstacles){
+      obstacle.setFill(color(168, 230, 207));
+      obstacle.setStroke(color(255));
+      obstacle.setStrokeWeight(3);
       shape(obstacle);
     }
   }
-  public void levelDisplay(){
+  public void createMap(){
     obstacles.clear();
-    if (level == 1){
+    if (level == 2){
       PShape Wall = createShape(RECT, 100, 100, 200, 20);
       obstacles.add(Wall);
     }
@@ -28,8 +30,20 @@ class Map{
     textSize(16);
     text("Level: " + level, 10, 20);
   }
+
   
-  public void checkCollision(){
+  public void checkCollision(PVector pos){
+    float x = pos.x;
+    float y = pos.y;
+    for(PShape obstacle : obstacles){
+      if(obstacle.X <= x && x <= obstacle.X + obstacle.width){
+        
+      }
+      if(obstacle.Y <= y && y <= obstacle.Y + obstacle.height){
+        
+      }
+    }
+    
     //for (PShape obs : obstacles) {
     //  float ox = obstacle.getParam("x");
     //  float oy = obstacle.getParam("y");
