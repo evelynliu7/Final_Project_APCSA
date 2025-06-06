@@ -42,6 +42,33 @@ class MazeMap extends Map{
     super.obstacles.add(createShape(RECT, 50, 450, 350, 20));
     super.obstacles.add(createShape(RECT, 350, 390, 20, 60));
     super.obstacles.add(createShape(RECT, 370, 390, 220, 20));
+    super.obstacles.add(createShape(RECT, 100, 390, 120, 20));
+    
+    super.obstacles.add(createShape(RECT, 600, 450, 60, 20));
+    
+    PShape bigPortal = createShape(ELLIPSE, 50, 290, 30, 60);
+    bigPortal.setFill(color(81, 110, 99));
+    super.portals.add(bigPortal);
+    
+    PShape mediumPortal = createShape(ELLIPSE, 45, 290, 20, 40);
+    mediumPortal.setFill(color(146, 201, 181));
+    super.portals.add(mediumPortal);
+    
+    PShape smallPortal = createShape(ELLIPSE, 40, 290, 10, 20);
+    smallPortal.setFill(color(81, 110, 99));
+    super.portals.add(smallPortal);
+    
+    bigPortal = createShape(ELLIPSE, 735, 210, 30, 60);
+    bigPortal.setFill(color(81, 110, 99));
+    super.portals.add(bigPortal);
+    
+    mediumPortal = createShape(ELLIPSE, 740, 210, 20, 40);
+    mediumPortal.setFill(color(146, 201, 181));
+    super.portals.add(mediumPortal);
+    
+    smallPortal = createShape(ELLIPSE, 745, 210, 10, 20);
+    smallPortal.setFill(color(81, 110, 99));
+    super.portals.add(smallPortal);
   }
   
   

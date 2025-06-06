@@ -1,5 +1,6 @@
 class Map{
   private ArrayList<PShape> obstacles;
+  private ArrayList<PShape> portals;
   private int level; 
   private int[][] layout; //-1 wall, 0 holes, 1
   //private PVector spawnPoint; 
@@ -8,6 +9,7 @@ class Map{
     this.level = level;
     //this.spawnPoint = spawn;
     this.obstacles = new ArrayList<PShape>();
+    this.portals = new ArrayList<PShape>();
     createMap();
   }
   
@@ -17,6 +19,16 @@ class Map{
       obstacle.setStroke(color(255));
       obstacle.setStrokeWeight(3);
       shape(obstacle);
+    }
+    for(PShape portal : portals){
+      //println(portal.getWidth());
+      //if(portal.getWidth() == 30) portal.setFill(color(168, 230, 207));
+      //else if(portal.getWidth() == 20) portal.setFill(color(146, 201, 181));
+      //else portal.setFill(color(81, 110, 99));
+      //portal.setFill(color(168, 230, 207));
+      portal.setStroke(color(255));
+      portal.setStrokeWeight(3);
+      shape(portal);
     }
   }
   public void createMap(){
