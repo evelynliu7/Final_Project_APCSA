@@ -21,47 +21,47 @@ class MazeMap extends Map{
   }
   
   public void createMap(){
-    super.obstacles.add(createShape(RECT, 30, 30, 280, 20));
-    super.obstacles.add(createShape(RECT, 30, 50, 20, 150));
+    super.obstacles.add(new Wall(30, 30, 280, 20));
+    super.obstacles.add(new Wall(30, 50, 20, 150));
     
-    super.obstacles.add(createShape(RECT, 10, 240, 160, 20));
-    super.obstacles.add(createShape(RECT, 170, 240, 20, 80));
-    super.obstacles.add(createShape(RECT, 190, 300, 60, 20));
-    super.obstacles.add(createShape(RECT, 250, 240, 20, 80));
-    super.obstacles.add(createShape(RECT, 100, 120, 20, 120));
-    super.obstacles.add(createShape(RECT, 120, 120, 70, 20));
+    super.obstacles.add(new Wall(10, 240, 160, 20));
+    super.obstacles.add(new Wall(170, 240, 20, 80));
+    super.obstacles.add(new Wall(190, 300, 60, 20));
+    super.obstacles.add(new Wall(250, 240, 20, 80));
+    super.obstacles.add(new Wall(100, 120, 20, 120));
+    super.obstacles.add(new Wall(120, 120, 70, 20));
     
-    super.obstacles.add(createShape(RECT, 200, 180, 150, 20));
-    super.obstacles.add(createShape(RECT, 250, 110, 20, 70));
-    super.obstacles.add(createShape(RECT, 350, 180, 20, 150));
-    super.obstacles.add(createShape(RECT, 370, 230, 80, 20));
-    super.obstacles.add(createShape(RECT, 450, 90, 20, 160));
+    super.obstacles.add(new Wall(200, 180, 150, 20));
+    super.obstacles.add(new Wall(250, 110, 20, 70));
+    super.obstacles.add(new Wall(350, 180, 20, 150));
+    super.obstacles.add(new Wall(370, 230, 80, 20));
+    super.obstacles.add(new Wall(450, 90, 20, 160));
     
-    super.obstacles.add(createShape(RECT, 380, 30, 90, 20));
-    super.obstacles.add(createShape(RECT, 380, 50, 20, 70));
+    super.obstacles.add(new Wall(380, 30, 90, 20));
+    super.obstacles.add(new Wall(380, 50, 20, 70));
     
-    super.obstacles.add(createShape(RECT, 550, 30, 170, 20));
-    super.obstacles.add(createShape(RECT, 550, 50, 20, 70));
-    super.obstacles.add(createShape(RECT, 720, 30, 20, 90));
-    super.obstacles.add(createShape(RECT, 740, 100, 50, 20));
+    super.obstacles.add(new Wall(550, 30, 170, 20));
+    super.obstacles.add(new Wall(550, 50, 20, 70));
+    super.obstacles.add(new Wall(720, 30, 20, 90));
+    super.obstacles.add(new Wall(740, 100, 50, 20));
     
-    super.obstacles.add(createShape(RECT, 550, 180, 170, 20));
-    super.obstacles.add(createShape(RECT, 620, 110, 20, 70));
+    super.obstacles.add(new Wall(550, 180, 170, 20));
+    super.obstacles.add(new Wall(620, 110, 20, 70));
     
-    super.obstacles.add(createShape(RECT, 450, 280, 170, 20));
-    super.obstacles.add(createShape(RECT, 510, 210, 20, 70));
+    super.obstacles.add(new Wall(450, 280, 170, 20));
+    super.obstacles.add(new Wall(510, 210, 20, 70));
     
-    super.obstacles.add(createShape(RECT, 680, 240, 70, 20));
-    super.obstacles.add(createShape(RECT, 750, 240, 20, 240));
-    super.obstacles.add(createShape(RECT, 680, 390, 70, 20));
+    super.obstacles.add(new Wall(680, 240, 70, 20));
+    super.obstacles.add(new Wall(750, 240, 20, 240));
+    super.obstacles.add(new Wall(680, 390, 70, 20));
     
-    super.obstacles.add(createShape(RECT, 30, 320, 20, 150));
-    super.obstacles.add(createShape(RECT, 50, 450, 350, 20));
-    super.obstacles.add(createShape(RECT, 350, 390, 20, 60));
-    super.obstacles.add(createShape(RECT, 370, 390, 220, 20));
-    super.obstacles.add(createShape(RECT, 100, 390, 120, 20));
+    super.obstacles.add(new Wall(30, 320, 20, 150));
+    super.obstacles.add(new Wall(50, 450, 350, 20));
+    super.obstacles.add(new Wall(350, 390, 20, 60));
+    super.obstacles.add(new Wall(370, 390, 220, 20));
+    super.obstacles.add(new Wall(100, 390, 120, 20));
     
-    super.obstacles.add(createShape(RECT, 600, 450, 60, 20));
+    super.obstacles.add(new Wall(600, 450, 60, 20));
     
     PShape bigPortal = createShape(ELLIPSE, 50, 290, 30, 60);
     bigPortal.setFill(color(81, 110, 99));
@@ -94,8 +94,8 @@ class MazeMap extends Map{
     portalRight.y = 210;
   }
   
-  public void checkCollision(Player player, Boomerang boomerang){
-   super.checkCollision(player, boomerang);
+  public void checkCollision(Player player){
+   super.checkCollision(player);
    PVector teleportRight = new PVector(portalRight.x - 10, portalRight.y);
    PVector teleportLeft = new PVector(portalLeft.x + 10, portalLeft.y);
     
@@ -106,5 +106,9 @@ class MazeMap extends Map{
     else if(player.getpos().x >= portalRight.x && portalRight.y - 5 <= player.getpos().y && player.getpos().y <= portalRight.y + 5){
       player.setpos(teleportLeft);
     }
+  }
+  
+  public void checkCollision(Boomerang boomerang){
+    super.checkCollision(boomerang);
   }
 }

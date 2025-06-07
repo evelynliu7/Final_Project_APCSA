@@ -1,20 +1,17 @@
 class Map{
-  private ArrayList<PShape> obstacles;
+  private ArrayList<Wall> obstacles;
   
   private int[][] layout; //-1 wall, 0 holes, 1
   //private PVector spawnPoint; 
   
   public Map(){
     //this.spawnPoint = spawn;
-    this.obstacles = new ArrayList<PShape>();
+    this.obstacles = new ArrayList<Wall>();
   }
   
   public void display(){
-    for (PShape obstacle : obstacles){
-      obstacle.setFill(color(168, 230, 207));
-      obstacle.setStroke(color(255));
-      obstacle.setStrokeWeight(3);
-      shape(obstacle);
+    for (Wall obstacle : obstacles){
+      obstacle.display();
     }
     
   }
@@ -31,18 +28,48 @@ class Map{
   }
 
   
-  public void checkCollision(Player player, Boomerang boomerang){
-    //float x = player.getpos().x;
-    //float y = player.getpos().y;
-    //for(PShape obstacle : obstacles){
-    //  if(obstacle.X <= x && x <= obstacle.X + obstacle.width){
-        
-    //  }
-    //  if(obstacle.Y <= y && y <= obstacle.Y + obstacle.height){
-        
-    //  }
-    //}
+  public void checkCollision(Player player){
+    //player
+    float x = player.getpos().x;
+    float y = player.getpos().y;
+    //boolean collidingX = false;
+    //boolean collidingY = false;
+    boolean collidingR = false;
+    boolean collidingL = false;
+    boolean collidingU = false;
+    boolean collidingD = false;
     
+    for(Wall obstacle : obstacles){
+      if((x+10 >= obstacle.x && x+10 <= obstacle.x + 5) && (y >= obstacle.y && y <= obstacle.y + obstacle.yLen)){
+        collidingR = true;
+        player.setAllowedRight(false);
+      }
+      if((x-10 >= obstacle.x + obstacle.xLen - 5 && x-10 <= obstacle.x + obstacle.xLen) && (y >= obstacle.y && y <= obstacle.y + obstacle.yLen)){
+        collidingL = true;
+        player.setAllowedLeft(false);
+      }
+      if((x >= obstacle.x && x <= obstacle.x + obstacle.xLen) && (y >= obstacle.y + obstacle.yLen && y <= obstacle.y + obstacle.yLen + 5)){
+        collidingU = true;
+        player.setAllowedUp(false);
+      }
+      if((x >= obstacle.x && x <= obstacle.x + obstacle.xLen) && (y+10 >= obstacle.y && y+10 <= obstacle.y + obstacle.yLen + 5)){
+        collidingD = true;
+        player.setAllowedDown(false);
+      }
+    }
+    
+    if(!collidingR){
+      player.setAllowedRight(true);
+    }
+    if(!collidingL){
+      player.setAllowedLeft(true);
+    }
+    if(!collidingU){
+      player.setAllowedUp(true);
+    }
+    if(!collidingD){
+      player.setAllowedDown(true);
+    }
     //for (PShape obs : obstacles) {
     //  float ox = obstacle.getParam("x");
     //  float oy = obstacle.getParam("y");
@@ -54,6 +81,10 @@ class Map{
     //    velocity.y *= -1;
     //  }
     //}
+  }
+  
+  public void checkCollision(Boomerang boomerang){
+    
   }
     /*  Figure out what is collision for
     

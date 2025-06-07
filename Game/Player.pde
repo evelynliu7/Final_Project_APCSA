@@ -14,9 +14,11 @@ class Player{
   
   private int firstKeyPressTime = 0;
   private boolean firstKeyPressed = false, firstKeyReleased = false;
+  
+  private boolean allowedUp = true, allowedLeft = true, allowedDown = true, allowedRight = true;
 
   public Player(int character, char[] controls) {
-    this.pos = new PVector(400, 250);
+    this.pos = new PVector(400, 270);
     this.PlayerBoomerang = new Boomerang(this, 255);
     this.speed = 1;
     this.lives = 3;
@@ -56,11 +58,24 @@ class Player{
     right = b;
   }
   
+  void setAllowedUp(boolean b){
+    allowedUp = b;
+  }
+  void setAllowedLeft(boolean b){
+    allowedLeft = b;
+  }
+  void setAllowedDown(boolean b){
+    allowedDown = b;
+  }
+  void setAllowedRight(boolean b){
+    allowedRight = b;
+  }
+  
   void move(){
-    if(up) pos.y--;
-    if(left) pos.x--;
-    if(down) pos.y++;
-    if(right) pos.x++;
+    if(up && allowedUp) pos.y--;
+    if(left && allowedLeft) pos.x--;
+    if(down && allowedDown) pos.y++;
+    if(right && allowedRight) pos.x++;
     
     //WRAP AROUND
     pos.x += width; pos.x %= width;

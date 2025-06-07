@@ -59,7 +59,8 @@ void draw(){
     Player1.display();
     Player1.PlayerBoomerang.display();
     Player1.displayLives();
-    currMap.checkCollision(Player1, Player1.getBoomerang());
+    currMap.checkCollision(Player1);
+    currMap.checkCollision(Player1.getBoomerang());
     
     if(frameCount % Player2.speed == 0){
       Player2.move();
@@ -69,7 +70,8 @@ void draw(){
     Player2.display();
     Player2.PlayerBoomerang.display();
     Player2.displayLives();
-    currMap.checkCollision(Player2, Player2.getBoomerang());
+    currMap.checkCollision(Player2);
+    currMap.checkCollision(Player2.getBoomerang());
     
     home.display();
     
