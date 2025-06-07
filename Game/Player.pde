@@ -18,7 +18,7 @@ class Player{
   public Player(int character, char[] controls) {
     this.pos = new PVector(400, 250);
     this.PlayerBoomerang = new Boomerang(this, 255);
-    this.speed = 2;
+    this.speed = 1;
     this.lives = 3;
     this.hasBoomerang = true;
     this.character = character;
@@ -97,33 +97,42 @@ class Player{
   }
   public void throwBoomerang(char dir){
     if(isSlowed && frameCount - slowStartFrame > slowDurationFrames){
-    isSlowed = false;
-    speed = 2; // brings the speed back
-  }
+      isSlowed = false;
+      speed = 2; // brings the speed back
+    }
   
     if(hasBoomerang){
-    hasBoomerang = false;
-    PlayerBoomerang.timer = 0;
-    PlayerBoomerang.returning = false;
-
-    float speed = 10;
-
-    if(dir == 'w' || dir == 'W' || dir == UP){
-      PlayerBoomerang.velocity = new PVector(0, -speed);
-    } else if(dir == 'a' || dir == 'A' || dir == LEFT){
-      PlayerBoomerang.velocity = new PVector(-speed, 0);
-    } else if(dir == 's' || dir == 'S' || dir == DOWN){
-      PlayerBoomerang.velocity = new PVector(0, speed);
-    } else if(dir == 'd' || dir == 'D' || dir == RIGHT){
-      PlayerBoomerang.velocity = new PVector(speed, 0);
+      hasBoomerang = false;
+      PlayerBoomerang.timer = 0;
+      PlayerBoomerang.returning = false;
+    
+      float speed = 10;
+    
+      if(dir == 'w' || dir == 'W' || dir == UP){
+        PlayerBoomerang.velocity = new PVector(0, -speed);
+      } else if(dir == 'a' || dir == 'A' || dir == LEFT){
+        PlayerBoomerang.velocity = new PVector(-speed, 0);
+      } else if(dir == 's' || dir == 'S' || dir == DOWN){
+        PlayerBoomerang.velocity = new PVector(0, speed);
+      } else if(dir == 'd' || dir == 'D' || dir == RIGHT){
+        PlayerBoomerang.velocity = new PVector(speed, 0);
+      }
+      PlayerBoomerang.location = pos.copy(); 
     }
-    PlayerBoomerang.location = pos.copy(); 
   }
+  
+  public Boomerang getBoomerang(){
+    return PlayerBoomerang;
+  }
+  
+  public void setpos(PVector newPos){
+    pos = newPos;
   }
   
   public PVector getpos(){
     return pos;
   }
+  
   public void checkHit(Player other){
     if (other.getpos().equals(PlayerBoomerang.getLocation())){
       other.updateLives();
@@ -150,6 +159,8 @@ class Player{
       text("Player 1's lives: " + lives, 90, 490);
     }
   }
+  
+  
   public void die(){
     if (lives == 0){
       

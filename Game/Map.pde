@@ -1,16 +1,12 @@
 class Map{
   private ArrayList<PShape> obstacles;
-  private ArrayList<PShape> portals;
-  private int level; 
+  
   private int[][] layout; //-1 wall, 0 holes, 1
   //private PVector spawnPoint; 
   
-  public Map(int level){
-    this.level = level;
+  public Map(){
     //this.spawnPoint = spawn;
     this.obstacles = new ArrayList<PShape>();
-    this.portals = new ArrayList<PShape>();
-    createMap();
   }
   
   public void display(){
@@ -20,33 +16,24 @@ class Map{
       obstacle.setStrokeWeight(3);
       shape(obstacle);
     }
-    for(PShape portal : portals){
-      //println(portal.getWidth());
-      //if(portal.getWidth() == 30) portal.setFill(color(168, 230, 207));
-      //else if(portal.getWidth() == 20) portal.setFill(color(146, 201, 181));
-      //else portal.setFill(color(81, 110, 99));
-      //portal.setFill(color(168, 230, 207));
-      portal.setStroke(color(255));
-      portal.setStrokeWeight(3);
-      shape(portal);
-    }
+    
   }
   public void createMap(){
     obstacles.clear();
-    if (level == 2){
-      PShape Wall = createShape(RECT, 100, 100, 200, 20);
-      obstacles.add(Wall);
-    }
+    //if (level == 2){
+    //  PShape Wall = createShape(RECT, 100, 100, 200, 20);
+    //  obstacles.add(Wall);
+    //}
       
-    fill(0);
-    textSize(16);
-    text("Level: " + level, 10, 20);
+    //fill(0);
+    //textSize(16);
+    //text("Level: " + level, 10, 20);
   }
 
   
-  public void checkCollision(PVector pos){
-    float x = pos.x;
-    float y = pos.y;
+  public void checkCollision(Player player, Boomerang boomerang){
+    float x = player.getpos().x;
+    float y = player.getpos().y;
     for(PShape obstacle : obstacles){
       if(obstacle.X <= x && x <= obstacle.X + obstacle.width){
         
