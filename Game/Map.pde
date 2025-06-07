@@ -32,16 +32,16 @@ class Map{
 
   
   public void checkCollision(Player player, Boomerang boomerang){
-    float x = player.getpos().x;
-    float y = player.getpos().y;
-    for(PShape obstacle : obstacles){
-      if(obstacle.X <= x && x <= obstacle.X + obstacle.width){
+    //float x = player.getpos().x;
+    //float y = player.getpos().y;
+    //for(PShape obstacle : obstacles){
+    //  if(obstacle.X <= x && x <= obstacle.X + obstacle.width){
         
-      }
-      if(obstacle.Y <= y && y <= obstacle.Y + obstacle.height){
+    //  }
+    //  if(obstacle.Y <= y && y <= obstacle.Y + obstacle.height){
         
-      }
-    }
+    //  }
+    //}
     
     //for (PShape obs : obstacles) {
     //  float ox = obstacle.getParam("x");
