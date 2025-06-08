@@ -18,7 +18,9 @@ class Player{
   private boolean allowedUp = true, allowedLeft = true, allowedDown = true, allowedRight = true;
   
   private int playerWidth, playerHeight;
-
+  private color currC, originalC;
+  
+  private int numReturningHits, numForwardHits;
   public Player(int character, char[] controls, int xPos, int yPos) {
     this.pos = new PVector(xPos, yPos);
     this.PlayerBoomerang = new Boomerang(this, 255);
@@ -29,6 +31,8 @@ class Player{
     this.controls = controls;
     playerWidth = 10;
     playerHeight = 10;
+    numReturningHits = 0;
+    numForwardHits = 0;
   }
   
   void display(){
@@ -38,18 +42,30 @@ class Player{
     //if(pos.y < height) pos.y = height;
     
     if(character == 1){
-      fill(255);
+      originalC = 255;
+      currC = 255;
+      fill(currC);
       stroke(255);
       circle(pos.x, pos.y, 10);
+      playerWidth = 5;
+      playerHeight  = 5;
     }
     else if(character == 2){
-      fill(0);
+      originalC = 0;
+      currC = 0;
+      fill(currC);
       square(pos.x, pos.y, 10);
-      
+      playerWidth = 12;
+      playerHeight = 12;
     }
     PlayerBoomerang.display();
   }
-  
+  void setNumReturning(int n) {
+    numReturningHits = n;
+  }
+  void setNumForward(int n) {
+    numForwardHits = n;
+  }
   void setUP(boolean b){
     up = b;
   }
@@ -159,10 +175,52 @@ class Player{
     float otherY = other.getpos().y;
     float boomX = PlayerBoomerang.getLocation().x;
     float boomY = PlayerBoomerang.getLocation().y;
-    if(otherX <= boomX && boomX <= otherX + 12.5 && otherY <= boomY && boomY <= otherY + 12.5){
-      if(!PlayerBoomerang.getReturning()){
-        other.updateLives();
-        //other.slowDown();
+    boolean forwardHit = false, returningHit = false;
+    if(character == 1){
+      float r=(otherX+5-boomX)*(otherX+5-boomX)+(otherY+5-boomY)*(otherY+5-boomY);
+      if (r<=7.5*7.5) {
+        if(PlayerBoomerang.getReturning()){
+          returningHit = true;
+          numReturningHits++;
+        }
+        else{
+          forwardHit = true;
+          numForwardHits++;
+        }
+      }
+    }
+    else if (character == 2){
+      float r=(otherX-boomX)*(otherX-boomX)+(otherY-boomY)*(otherY-boomY);
+      if (r<=7.5*7.5) {
+        if(PlayerBoomerang.getReturning()){
+          returningHit = true;
+          numReturningHits++;
+        }
+        else{
+          forwardHit = true;
+          numForwardHits++;
+        }
+      }
+   }
+   if(returningHit && numReturningHits<=1){
+     other.updateLives(-1);
+     animateHit();
+     returningHit=false;
+   }
+   else if(forwardHit && numForwardHits<=1){
+     other.updateLives(-1);
+     animateHit();
+     forwardHit=false;
+   }
+     
+  }
+  
+  public void animateHit(){
+    for(int i=0; i<3; i++){
+      int start = millis();
+      currC = color(255, 102, 125);
+      if(millis() >= start + 100){
+        currC = originalC;
       }
     }
   }
@@ -173,8 +231,8 @@ class Player{
     slowStartFrame = frameCount;
     speed = 1;
   }
-  public void updateLives(){
-    lives--; 
+  public void updateLives(int num){
+    lives += num; 
   }
   public void displayLives(){
     textSize(18);

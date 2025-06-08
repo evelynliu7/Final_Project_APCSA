@@ -59,6 +59,8 @@ class Boomerang{
     }
     if (PVector.dist(location, owner.pos) < 10) {
       owner.setHasBoomerang(true);
+      owner.setNumReturning(0);
+      owner.setNumForward(0);
       returning = false;
       velocity = new PVector(0, 0);
     }
