@@ -17,8 +17,8 @@ class Player{
   
   private boolean allowedUp = true, allowedLeft = true, allowedDown = true, allowedRight = true;
 
-  public Player(int character, char[] controls) {
-    this.pos = new PVector(400, 270);
+  public Player(int character, char[] controls, int xPos, int yPos) {
+    this.pos = new PVector(xPos, yPos);
     this.PlayerBoomerang = new Boomerang(this, 255);
     this.speed = 1;
     this.lives = 3;
@@ -118,21 +118,22 @@ class Player{
   
     if(hasBoomerang){
       hasBoomerang = false;
-      PlayerBoomerang.timer = 0;
-      PlayerBoomerang.returning = false;
+      PlayerBoomerang.setTimer(0);
+      PlayerBoomerang.setReturning(false);
     
       float speed = 10;
     
-      if(dir == 'w' || dir == 'W' || dir == UP){
-        PlayerBoomerang.velocity = new PVector(0, -speed);
-      } else if(dir == 'a' || dir == 'A' || dir == LEFT){
-        PlayerBoomerang.velocity = new PVector(-speed, 0);
-      } else if(dir == 's' || dir == 'S' || dir == DOWN){
-        PlayerBoomerang.velocity = new PVector(0, speed);
-      } else if(dir == 'd' || dir == 'D' || dir == RIGHT){
-        PlayerBoomerang.velocity = new PVector(speed, 0);
+      if(dir == 'W' || dir == UP){
+        PlayerBoomerang.setVelocity(new PVector(0, -speed));
+      } else if(dir == 'A' || dir == LEFT){
+        PlayerBoomerang.setVelocity(new PVector(-speed, 0));
+      } else if(dir == 'S' || dir == DOWN){
+        PlayerBoomerang.setVelocity(new PVector(0, speed));
+      } else if(dir == 'D' || dir == RIGHT){
+        PlayerBoomerang.setVelocity(new PVector(speed, 0));
       }
       PlayerBoomerang.location = pos.copy(); 
+      PlayerBoomerang.move();
     }
   }
   
@@ -151,7 +152,7 @@ class Player{
   public void checkHit(Player other){
     if (other.getpos().equals(PlayerBoomerang.getLocation())){
       other.updateLives();
-      other.slowDown();
+      //other.slowDown();
     }
   }
   

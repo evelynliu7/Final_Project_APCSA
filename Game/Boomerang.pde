@@ -21,7 +21,7 @@ class Boomerang{
     rotate(spinAngle);
     
     fill(c);
-    circle(0, 0, 10);        
+    //circle(0, 0, 10);        
     stroke(255, 0, 0);
     strokeWeight(2);
     
@@ -37,7 +37,7 @@ class Boomerang{
   
   public void move(){
     //figure out how it comes back bc player will move 
-    if (owner.hasBoomerang){
+    if (owner.hasBoomerang()){
       location = owner.pos.copy();
       timer = 0;
       velocity = new PVector(0, 0);
@@ -49,19 +49,20 @@ class Boomerang{
   
     if (timer < 15 && !returning) {
       location.add(velocity);
-    } else {
+    }
+    else{
       returning = true;
       PVector toPlayer = PVector.sub(owner.pos, location);
       toPlayer.setMag(5);
       velocity = toPlayer;
       location.add(velocity);
     }
-      if (PVector.dist(location, owner.pos) < 10) {
-        owner.setHasBoomerang(true);
-        returning = false;
-        velocity = new PVector(0, 0);
+    if (PVector.dist(location, owner.pos) < 10) {
+      owner.setHasBoomerang(true);
+      returning = false;
+      velocity = new PVector(0, 0);
     }
-  animate();
+    animate();
   }
   
   public void animate(){
@@ -70,5 +71,17 @@ class Boomerang{
   
   public PVector getLocation(){
     return location;
+  }
+  
+  public void setTimer(int t){
+    timer = t;
+  }
+  
+  public void setReturning(boolean b){
+    returning = b;
+  }
+  
+  public void setVelocity(PVector newV){
+    velocity = newV;
   }
 }

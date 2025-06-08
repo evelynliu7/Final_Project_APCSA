@@ -1,15 +1,17 @@
 //main class
 char[] arrowKeys = {(char)UP, (char)LEFT, (char)DOWN, (char)RIGHT};
-Player Player1 = new Player(1, arrowKeys);
+Player Player1 = new Player(1, arrowKeys, 700, 70);
 
 char[] WASD = {'w', 'a', 's', 'd'};
-Player Player2 = new Player(2, WASD );
+Player Player2 = new Player(2, WASD, 70, 430);
 
 int screen=2;
 ArrayList<Map> maps = new ArrayList<Map>();
 Button start, home, rematch, directions;
 
 PFont f;
+
+int testing_counter=0;
 
 void setup(){
   size(800, 500);
@@ -59,6 +61,7 @@ void draw(){
     Player1.display();
     Player1.PlayerBoomerang.display();
     Player1.displayLives();
+    Player1.checkHit(Player2);
     currMap.checkCollision(Player1);
     currMap.checkCollision(Player1.getBoomerang());
     
@@ -70,6 +73,7 @@ void draw(){
     Player2.display();
     Player2.PlayerBoomerang.display();
     Player2.displayLives();
+    Player2.checkHit(Player1);
     currMap.checkCollision(Player2);
     currMap.checkCollision(Player2.getBoomerang());
     
@@ -122,6 +126,8 @@ void checkDoubleClick(char directionKey, Player p){
   
   if(DoubleClick){
     p.throwBoomerang(directionKey);
+    println("double click detected " + testing_counter);
+    testing_counter++;
   }
   
 }
