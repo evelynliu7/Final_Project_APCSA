@@ -16,6 +16,8 @@ class Player{
   private boolean firstKeyPressed = false, firstKeyReleased = false;
   
   private boolean allowedUp = true, allowedLeft = true, allowedDown = true, allowedRight = true;
+  
+  private int playerWidth, playerHeight;
 
   public Player(int character, char[] controls, int xPos, int yPos) {
     this.pos = new PVector(xPos, yPos);
@@ -25,6 +27,8 @@ class Player{
     this.hasBoomerang = true;
     this.character = character;
     this.controls = controls;
+    playerWidth = 10;
+    playerHeight = 10;
   }
   
   void display(){
@@ -41,6 +45,7 @@ class Player{
     else if(character == 2){
       fill(0);
       square(pos.x, pos.y, 10);
+      
     }
     PlayerBoomerang.display();
   }
@@ -150,9 +155,15 @@ class Player{
   }
   
   public void checkHit(Player other){
-    if (other.getpos().equals(PlayerBoomerang.getLocation())){
-      other.updateLives();
-      //other.slowDown();
+    float otherX = other.getpos().x;
+    float otherY = other.getpos().y;
+    float boomX = PlayerBoomerang.getLocation().x;
+    float boomY = PlayerBoomerang.getLocation().y;
+    if(otherX <= boomX && boomX <= otherX + 12.5 && otherY <= boomY && boomY <= otherY + 12.5){
+      if(!PlayerBoomerang.getReturning()){
+        other.updateLives();
+        //other.slowDown();
+      }
     }
   }
   

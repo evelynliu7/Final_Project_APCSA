@@ -25,7 +25,7 @@ class Boomerang{
     stroke(255, 0, 0);
     strokeWeight(2);
     
-    line(0, 0, 5, 0);        
+    line(0, 0, 5, 0);      
     noStroke();
     popMatrix();
   }
@@ -79,6 +79,9 @@ class Boomerang{
   
   public void setReturning(boolean b){
     returning = b;
+  }
+  public boolean getReturning(){
+    return returning;
   }
   
   public void setVelocity(PVector newV){
