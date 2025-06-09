@@ -246,10 +246,11 @@ class Player{
   }
   
   
-  public void die(){
+  public boolean dead(){
     if (lives == 0){
-      
+      return true;
     }
+    return false;
   }
   
   public void applyPowerUp(){

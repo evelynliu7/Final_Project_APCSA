@@ -10,8 +10,9 @@ ArrayList<Map> maps = new ArrayList<Map>();
 Button start, home, rematch, directions;
 
 PFont f;
+//int testing_counter=0;
 
-int testing_counter=0;
+String winner, loser;
 
 void setup(){
   size(800, 500);
@@ -27,7 +28,13 @@ void setup(){
 }
 
 void draw(){
-  if (screen==0) {
+  if(screen == -1){
+    textSize(80);
+    fill(255, 102, 125);
+    text(winner+" WON!", 400, 200);
+    
+  }
+  else if (screen==0) {
     //home screen
     background(255, 212, 184);
     textFont(f, 50);
@@ -64,6 +71,11 @@ void draw(){
     Player1.checkHit(Player2);
     currMap.checkCollision(Player1);
     currMap.checkCollision(Player1.getBoomerang());
+    if(Player1.dead()){
+      screen = -1;
+      winner = "Player 2";
+      loser = "Player 1";
+    }
     
     if(frameCount % Player2.speed == 0){
       Player2.move();
@@ -76,6 +88,11 @@ void draw(){
     Player2.checkHit(Player1);
     currMap.checkCollision(Player2);
     currMap.checkCollision(Player2.getBoomerang());
+    if(Player2.dead()){
+      screen = -1;
+      winner = "Player 1";
+      loser = "Player 2";
+    }
     
     home.display();
     
@@ -126,8 +143,8 @@ void checkDoubleClick(char directionKey, Player p){
   
   if(DoubleClick){
     p.throwBoomerang(directionKey);
-    println("double click detected " + testing_counter);
-    testing_counter++;
+    //println("double click detected " + testing_counter);
+    //testing_counter++;
   }
   
 }
