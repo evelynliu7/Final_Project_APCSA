@@ -25,7 +25,7 @@ public class Button{
     text(text, upperX+(w/2), upperY+(h/2));
   }
   
-  public boolean clicked(int mx, int my){
+  public boolean inside(int mx, int my){
     if(upperX <= mx && mx <= upperX+w && upperY<= my && my<=upperY+h){
       return true;
     }

@@ -5,9 +5,10 @@ Player Player1 = new Player(1, arrowKeys, 700, 70);
 char[] WASD = {'w', 'a', 's', 'd'};
 Player Player2 = new Player(2, WASD, 70, 430);
 
-int screen=2;
+int screen=0;
 ArrayList<Map> maps = new ArrayList<Map>();
 Button start, home, rematch, directions;
+Button Maze, FallingTiles, Spin;
 
 PFont f;
 //int testing_counter=0;
@@ -23,6 +24,10 @@ void setup(){
   start = new Button(500, 150, 100, 200, "START", 20);
   directions = new Button(500, 275, 100, 200, "DIRECTIONS", 15);
   home = new Button(700, 425, 50, 75, "HOME", 15);
+  //rematch =
+  Maze = new Button (50, 125, 100, 200, "MAZE", 20);
+  FallingTiles = new Button(300, 125, 100, 200, "FALLING TILES", 20);
+  Spin = new Button(550, 125, 100, 200, "SPIN", 20);
   
   f=createFont("Showcard Gothic", 24);
 }
@@ -69,6 +74,37 @@ void draw(){
     text("Multiple maps with mazes and hazards will be played.", 400, 370);
     text("Avoid holes and stay within the map boundaries!", 400, 390);
     home.display();
+  }
+  else if(screen == -2){ //map select
+    background(255, 240, 217);
+    fill(255, 157, 149);
+    textSize(40);
+    text("Choose your Map", 400, 50);
+    Maze.display();
+    FallingTiles.display();
+    Spin.display();
+    
+    if(Maze.inside(mouseX, mouseY)){
+      fill(255, 157, 149);
+      textSize(20);
+      text("A rectangular maze with portals allowing players to teleport.", 400, 320);
+      text("Note: The boomerang will stick to the wall if hit. Players must ", 400, 370);
+      text("walk up to their boomerang to retrive it.", 400, 420);
+    }
+    if(FallingTiles.inside(mouseX, mouseY)){
+      fill(255, 157, 149);
+      textSize(20);
+      text("A rectangular map composed of square tiles that become darker the", 400, 320);
+      text("longer players stay on them. Once a tile turns black, it will fall,", 400, 370);
+      text("and players cannot stand there anymore.", 400, 420);
+    }
+    if(Spin.inside(mouseX, mouseY)){
+      fill(255, 157, 149);
+      textSize(19);
+      text("A rectangular map with two spinning logs at the center. The logs act", 400, 320);
+      text("like walls: players cannot walk through them, and boomerangs stick to", 400, 370);
+      text("them. If players stand in the way of the log, they will be pushed with it.", 400, 420);
+    }
   }
   else{    
     background(221, 237, 196);
@@ -207,22 +243,22 @@ void mouseClicked() {
   //check which button mouse is cliking on
   //update screen variable
   if(screen==0){
-    if(start.clicked(mouseX, mouseY)){
-      screen = 2;
+    if(start.inside(mouseX, mouseY)){
+      screen = -2;
     }
-    if(directions.clicked(mouseX, mouseY)){
+    if(directions.inside(mouseX, mouseY)){
       screen = 1;
     }
   }
   
   if(screen>=2){
-    if(home.clicked(mouseX, mouseY)){
+    if(home.inside(mouseX, mouseY)){
       screen = 0;
     }
   }
   
   if(screen == -1){
-    if(home.clicked(mouseX, mouseY)){
+    if(home.inside(mouseX, mouseY)){
       winner = "";
       loser = "";
       Player1.setpos(new PVector(700, 70));
@@ -232,6 +268,18 @@ void mouseClicked() {
       Player1.PlayerBoomerang.resetLoc();
       Player2.PlayerBoomerang.resetLoc();
       screen = 0;
+    }
+  }
+  
+  if(screen == -2){
+    if(Maze.inside(mouseX, mouseY)){
+      screen = 2;
+    }
+    if(FallingTiles.inside(mouseX, mouseY)){
+      screen = 3;
+    }
+    if(Spin.inside(mouseX, mouseY)){
+      screen = 4;
     }
   }
   
