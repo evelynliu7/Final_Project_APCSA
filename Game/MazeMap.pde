@@ -109,6 +109,22 @@ class MazeMap extends Map{
   }
   
   public void checkCollision(Boomerang boomerang){
-    super.checkCollision(boomerang);
+    for (Wall obstacle : obstacles) {
+      PVector nextPos = PVector.add(boomerang.getLocation(), boomerang.velocity);
+      float margin = 3; 
+      
+      if (nextPos.x > obstacle.x - margin && nextPos.x < obstacle.x + obstacle.xLen + margin &&
+          nextPos.y > obstacle.y - margin && nextPos.y < obstacle.y + obstacle.yLen + margin) {
+          
+          boomerang.setVelocity(new PVector(0, 0));
+          boomerang.setReturning(false);
+          boomerang.setStopped(true);
+          boomerang.setTimer(10000);
+          return;
+      }
+}
+
+
+
   }
 }
