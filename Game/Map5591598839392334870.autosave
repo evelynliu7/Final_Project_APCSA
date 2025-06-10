@@ -1,0 +1,91 @@
+class Map{
+  public ArrayList<Wall> obstacles;
+  
+  private int[][] layout; //-1 wall, 0 holes, 1
+  //private PVector spawnPoint; 
+  
+  public Map(){
+    //this.spawnPoint = spawn;
+    this.obstacles = new ArrayList<Wall>();
+  }
+  
+  public void display(){
+    for (Wall obstacle : obstacles){
+      obstacle.display();
+    }
+    
+  }
+  public void createMap(){
+    obstacles.clear();
+    //if (level == 2){
+    //  PShape Wall = createShape(RECT, 100, 100, 200, 20);
+    //  obstacles.add(Wall);
+    //}
+      
+    //fill(0);
+    //textSize(16);
+    //text("Level: " + level, 10, 20);
+  }
+
+  
+  public void checkCollision(Player player){
+    //player
+    float x = player.getpos().x;
+    float y = player.getpos().y;
+    //boolean collidingX = false;
+    //boolean collidingY = false;
+    boolean collidingR = false;
+    boolean collidingL = false;
+    boolean collidingU = false;
+    boolean collidingD = false;
+    
+    for(Wall obstacle : obstacles){
+      if((x+10 >= obstacle.x && x+10 <= obstacle.x + 5) && (y >= obstacle.y && y <= obstacle.y + obstacle.yLen)){
+        collidingR = true;
+        player.setAllowedRight(false);
+      }
+      if((x-10 >= obstacle.x + obstacle.xLen - 5 && x-10 <= obstacle.x + obstacle.xLen) && (y >= obstacle.y && y <= obstacle.y + obstacle.yLen)){
+        collidingL = true;
+        player.setAllowedLeft(false);
+      }
+      if((x >= obstacle.x && x <= obstacle.x + obstacle.xLen) && (y >= obstacle.y + obstacle.yLen && y <= obstacle.y + obstacle.yLen + 5)){
+        collidingU = true;
+        player.setAllowedUp(false);
+      }
+      if((x >= obstacle.x && x <= obstacle.x + obstacle.xLen) && (y+10 >= obstacle.y && y+10 <= obstacle.y + obstacle.yLen + 5)){
+        collidingD = true;
+        player.setAllowedDown(false);
+      }
+    }
+    
+    if(!collidingR){
+      player.setAllowedRight(true);
+    }
+    if(!collidingL){
+      player.setAllowedLeft(true);
+    }
+    if(!collidingU){
+      player.setAllowedUp(true);
+    }
+    if(!collidingD){
+      player.setAllowedDown(true);
+    }
+    //for (PShape obs : obstacles) {
+    //  float ox = obstacle.getParam("x");
+    //  float oy = obstacle.getParam("y");
+    //  float ow = obstacle.getParam("width");
+    //  float oh = obstacle.getParam("height");
+      
+    //  if (pos.x > ox && pos.x < ox + ow && pos.y > oy && pos.y < oy + oh) {
+    //    velocity.x *= -1;
+    //    velocity.y *= -1;
+    //  }
+    //}
+  }
+  
+  public void checkCollision(Boomerang boomerang){
+    
+  }
+ 
+
+}
