@@ -47,6 +47,7 @@ class Boomerang{
       location = owner.pos.copy();
       timer = 0;
       velocity = new PVector(0, 0);
+      returning = false;
       return;
     }
     
@@ -76,6 +77,14 @@ class Boomerang{
     spinAngle += 0.3;
   }
   
+  public void pickupByPlayer() {
+    stopped = false;
+    returning = false;
+    velocity = new PVector(0, 0);
+    timer = 0;
+    location = owner.pos.copy();
+  }
+
   public PVector getLocation(){
     return location;
   }
