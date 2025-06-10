@@ -21,6 +21,7 @@ class Player{
   private color currC, originalC;
   
   private int numReturningHits, numForwardHits;
+  
   public Player(int character, char[] controls, int xPos, int yPos) {
     this.pos = new PVector(xPos, yPos);
     this.PlayerBoomerang = new Boomerang(this, 255);

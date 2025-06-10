@@ -1,4 +1,7 @@
-//main class
+import processing.sound.*;
+SoundFile buttonClick;
+SoundFile boomerangThrow;
+
 char[] arrowKeys = {(char)UP, (char)LEFT, (char)DOWN, (char)RIGHT};
 Player Player1 = new Player(1, arrowKeys, 700, 70);
 
@@ -33,6 +36,9 @@ void setup(){
   Maze = new Button (50, 125, 100, 200, "MAZE", 20);
   FallingTiles = new Button(300, 125, 100, 200, "FALLING TILES", 20);
   Spin = new Button(550, 125, 100, 200, "SPIN", 20);
+  
+  buttonClick = new SoundFile(this, "Sounds/ButtonClick.mp3");
+  boomerangThrow = new SoundFile(this, "Sounds/BoomerangThrow.mp3");
   
   f=createFont("Showcard Gothic", 24);
 }
@@ -202,8 +208,7 @@ void checkDoubleClick(char directionKey, Player p){
   
   if(DoubleClick){
     p.throwBoomerang(directionKey);
-    //println("double click detected " + testing_counter);
-    //testing_counter++;
+    boomerangThrow.play();
   }
   
 }
@@ -243,28 +248,30 @@ void keyReleased(){
   
 }
 
-void mouseClicked() {
-  //make button class; stores top-left corner, width, height
-  //check which button mouse is cliking on
-  //update screen variable
+void mousePressed() {
+  boolean buttonClicked = false;  
   if(screen==0){
     if(start.inside(mouseX, mouseY)){
       timeStartClicked = millis();
+      buttonClicked = true;
       screen = -2;
     }
     if(directions.inside(mouseX, mouseY)){
+      buttonClicked = true;
       screen = 1;
     }
   }
   
   if(screen>=1){
     if(home.inside(mouseX, mouseY)){
+      buttonClicked = true;
       screen = 0;
     }
   }
   
   if(screen == -1){
     if(home.inside(mouseX, mouseY)){
+      buttonClicked = true;
       winner = "";
       loser = "";
       Player1.setpos(new PVector(700, 70));
@@ -279,16 +286,23 @@ void mouseClicked() {
   
   if(screen == -2){
     if(Maze.inside(mouseX, mouseY)){
+      buttonClicked = true;
       screen = 2;
     }
     if(FallingTiles.inside(mouseX, mouseY)){
+      buttonClicked = true;
       screen = 3;
     }
     if(Spin.inside(mouseX, mouseY)){
       if(millis() > timeStartClicked + 200){
+        buttonClicked = true;
         screen = 4;
       }
     }
+  }
+  
+  if(buttonClicked){
+    buttonClick.play();
   }
   
 }
