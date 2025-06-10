@@ -1,9 +1,6 @@
 class Map{
   public ArrayList<Wall> obstacles;
   
-  private int[][] layout; //-1 wall, 0 holes, 1
-  //private PVector spawnPoint; 
-  
   public Map(){
     //this.spawnPoint = spawn;
     this.obstacles = new ArrayList<Wall>();
@@ -17,23 +14,12 @@ class Map{
   }
   public void createMap(){
     obstacles.clear();
-    //if (level == 2){
-    //  PShape Wall = createShape(RECT, 100, 100, 200, 20);
-    //  obstacles.add(Wall);
-    //}
-      
-    //fill(0);
-    //textSize(16);
-    //text("Level: " + level, 10, 20);
   }
 
   
   public void checkCollision(Player player){
-    //player
     float x = player.getpos().x;
     float y = player.getpos().y;
-    //boolean collidingX = false;
-    //boolean collidingY = false;
     boolean collidingR = false;
     boolean collidingL = false;
     boolean collidingU = false;
@@ -70,30 +56,23 @@ class Map{
     if(!collidingD){
       player.setAllowedDown(true);
     }
-    //for (PShape obs : obstacles) {
-    //  float ox = obstacle.getParam("x");
-    //  float oy = obstacle.getParam("y");
-    //  float ow = obstacle.getParam("width");
-    //  float oh = obstacle.getParam("height");
-      
-    //  if (pos.x > ox && pos.x < ox + ow && pos.y > oy && pos.y < oy + oh) {
-    //    velocity.x *= -1;
-    //    velocity.y *= -1;
-    //  }
-    //}
   }
   
   public void checkCollision(Boomerang boomerang){
-    
-  }
-    /*  Figure out what is collision for
-    
-    if (boomerangPos.x > x && boomerangPos.x < x + w &&
-       boomerangPos.y > y && boomerangPos.y < y + h) {
-        boomerangVel.x *= -1;
-        boomerangVel.y *= -1;
-        return;
+    for (Wall obstacle : obstacles) {
+      PVector nextPos = PVector.add(boomerang.getLocation(), boomerang.velocity);
+      float margin = 3; 
+      
+      if (nextPos.x > obstacle.x - margin && nextPos.x < obstacle.x + obstacle.xLen + margin &&
+          nextPos.y > obstacle.y - margin && nextPos.y < obstacle.y + obstacle.yLen + margin) {
+          
+          boomerang.setVelocity(new PVector(0, 0));
+          boomerang.setReturning(false);
+          boomerang.setStopped(true);
+          boomerang.setTimer(10000);
+          return;
       }
-    */
+    }
+  }
 
 }
