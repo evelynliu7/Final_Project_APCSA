@@ -28,14 +28,13 @@ void setup(){
 }
 
 void draw(){
-  if(screen == -1){
+  if(screen == -1){ //winner screen
     textSize(80);
     fill(255, 102, 125);
     text(winner+" WON!", 400, 200);
     
   }
-  else if (screen==0) {
-    //home screen
+  else if (screen==0) { //home screen
     background(255, 212, 184);
     textFont(f, 50);
     textAlign(LEFT);
@@ -216,8 +215,22 @@ void mouseClicked() {
     }
   }
   
-  if(screen!=0){
+  if(screen>=2){
     if(home.clicked(mouseX, mouseY)){
+      screen = 0;
+    }
+  }
+  
+  if(screen == -1){
+    if(home.clicked(mouseX, mouseY)){
+      winner = "";
+      loser = "";
+      Player1.setpos(new PVector(700, 70));
+      Player2.setpos(new PVector(70, 430));
+      Player1.setlives(3);
+      Player2.setlives(3);
+      Player1.PlayerBoomerang.resetLoc();
+      Player2.PlayerBoomerang.resetLoc();
       screen = 0;
     }
   }

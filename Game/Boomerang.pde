@@ -105,8 +105,10 @@ class Boomerang{
   public void setStopped(boolean s) {
     stopped = s;
   }
-
   public void setVelocity(PVector newV){
     velocity = newV;
+  }
+  public void resetLoc(){
+    location = owner.pos.copy();
   }
 }

@@ -253,6 +253,11 @@ class Player{
     return false;
   }
   
+  public void setlives(int l){
+    lives = l;
+    
+  }
+  
   public void applyPowerUp(){
     
   }
