@@ -1,6 +1,8 @@
 import processing.sound.*;
 SoundFile buttonClick;
 SoundFile boomerangThrow;
+SoundFile pickUp;
+SoundFile teleport;
 
 char[] arrowKeys = {(char)UP, (char)LEFT, (char)DOWN, (char)RIGHT};
 Player Player1 = new Player(1, arrowKeys, 700, 70);
@@ -26,8 +28,8 @@ void setup(){
   maps.add(mazeMap);
   Map fallingTilesMap = new FallingTilesMap();
   maps.add(fallingTilesMap);
-  Map spinningObstacleMap = new SpinningObstacleMap();
-  maps.add(spinningObstacleMap);
+  Map RotatingBlockMap = new RotatingBlockMap();
+  maps.add(RotatingBlockMap);
   
   start = new Button(500, 150, 100, 200, "START", 20);
   directions = new Button(500, 275, 100, 200, "DIRECTIONS", 15);
@@ -39,6 +41,8 @@ void setup(){
   
   buttonClick = new SoundFile(this, "Sounds/ButtonClick.mp3");
   boomerangThrow = new SoundFile(this, "Sounds/BoomerangThrow.mp3");
+  pickUp = new SoundFile(this, "Sounds/PickUp.mp3");
+  teleport = new SoundFile(this, "Sounds/Teleport.mp3");
   
   f=createFont("Showcard Gothic", 24);
 }
@@ -135,6 +139,7 @@ void draw(){
     Player1.checkHit(Player2);
     currMap.checkCollision(Player1);
     currMap.checkCollision(Player1.getBoomerang());
+    currMap.teleported(Player1);
     if(Player1.dead()){
       screen = -1;
       winner = "Player 2";
@@ -153,6 +158,7 @@ void draw(){
     Player2.checkHit(Player1);
     currMap.checkCollision(Player2);
     currMap.checkCollision(Player2.getBoomerang());
+    currMap.teleported(Player2);
     if(Player2.dead()){
       screen = -1;
       winner = "Player 1";
@@ -160,6 +166,11 @@ void draw(){
     }
     
     home.display();
+    
+    if(screen == 2){
+      if(currMap.teleported(Player1)) teleport.play();
+      if(currMap.teleported(Player2)) teleport.play();
+    }
     
   }
 }
@@ -220,6 +231,7 @@ public void checkPickup(Player player, Boomerang boomerang) {
     if (PVector.dist(player.pos, boomerang.getLocation()) < pickupDistance) {
       player.setHasBoomerang(true);
       boomerang.pickupByPlayer();
+      pickUp.play();
     }
   }
 }

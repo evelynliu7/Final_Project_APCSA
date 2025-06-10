@@ -56,6 +56,8 @@ class Map{
     if(!collidingD){
       player.setAllowedDown(true);
     }
+    
+    
   }
   
   public void checkCollision(Boomerang boomerang){
@@ -73,6 +75,10 @@ class Map{
           return;
       }
     }
+  }
+  
+  public boolean teleported(Player player){
+    return false;
   }
   
 
