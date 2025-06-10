@@ -6,6 +6,7 @@ class Boomerang{
   private int timer; 
   private float spinAngle = 0;
   private boolean returning = false;
+  private boolean stopped = false;
   
   public Boomerang(Player owner, color c){
     this.owner = owner;
@@ -37,6 +38,11 @@ class Boomerang{
   
   public void move(){
     //figure out how it comes back bc player will move 
+    
+    if (stopped){
+      return; 
+    }
+    
     if (owner.hasBoomerang()){
       location = owner.pos.copy();
       timer = 0;
@@ -46,7 +52,6 @@ class Boomerang{
     
     timer++;
     animate();
-  
     if (timer < 15 && !returning) {
       location.add(velocity);
     }
@@ -85,7 +90,13 @@ class Boomerang{
   public boolean getReturning(){
     return returning;
   }
-  
+  public boolean isStopped() {
+    return stopped;
+  }
+  public void setStopped(boolean s) {
+    stopped = s;
+  }
+
   public void setVelocity(PVector newV){
     velocity = newV;
   }

@@ -1,5 +1,5 @@
 class Map{
-  private ArrayList<Wall> obstacles;
+  public ArrayList<Wall> obstacles;
   
   private int[][] layout; //-1 wall, 0 holes, 1
   //private PVector spawnPoint; 
