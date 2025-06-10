@@ -82,6 +82,7 @@ void draw(){
     }
     
     Player1.PlayerBoomerang.move();
+    checkPickup(Player1, Player1.getBoomerang());
     Player1.display();
     Player1.PlayerBoomerang.display();
     Player1.displayLives();
@@ -99,6 +100,7 @@ void draw(){
     }
     
     Player2.PlayerBoomerang.move();
+    checkPickup(Player2, Player2.getBoomerang());
     Player2.display();
     Player2.PlayerBoomerang.display();
     Player2.displayLives();
@@ -165,6 +167,19 @@ void checkDoubleClick(char directionKey, Player p){
   }
   
 }
+
+public void checkPickup(Player player, Boomerang boomerang) {
+  if (boomerang.isStopped()) {
+    float pickupDistance = 10;  
+    
+    if (PVector.dist(player.pos, boomerang.getLocation()) < pickupDistance) {
+      player.setHasBoomerang(true);
+      boomerang.pickupByPlayer();
+    }
+  }
+}
+
+
 
 void keyReleased(){
   if(key==CODED){
