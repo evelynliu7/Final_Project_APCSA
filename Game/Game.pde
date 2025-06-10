@@ -7,6 +7,7 @@ Player Player2 = new Player(2, WASD, 70, 430);
 
 int screen=0;
 ArrayList<Map> maps = new ArrayList<Map>();
+int timeStartClicked = 0;
 Button start, home, rematch, directions;
 Button Maze, FallingTiles, Spin;
 
@@ -19,7 +20,11 @@ void setup(){
   size(800, 500);
   
   Map mazeMap = new MazeMap(); //game maze
-  maps.add(0, mazeMap);
+  maps.add(mazeMap);
+  Map fallingTilesMap = new FallingTilesMap();
+  maps.add(fallingTilesMap);
+  Map spinningObstacleMap = new SpinningObstacleMap();
+  maps.add(spinningObstacleMap);
   
   start = new Button(500, 150, 100, 200, "START", 20);
   directions = new Button(500, 275, 100, 200, "DIRECTIONS", 15);
@@ -244,6 +249,7 @@ void mouseClicked() {
   //update screen variable
   if(screen==0){
     if(start.inside(mouseX, mouseY)){
+      timeStartClicked = millis();
       screen = -2;
     }
     if(directions.inside(mouseX, mouseY)){
@@ -251,7 +257,7 @@ void mouseClicked() {
     }
   }
   
-  if(screen>=2){
+  if(screen>=1){
     if(home.inside(mouseX, mouseY)){
       screen = 0;
     }
@@ -279,7 +285,9 @@ void mouseClicked() {
       screen = 3;
     }
     if(Spin.inside(mouseX, mouseY)){
-      screen = 4;
+      if(millis() > timeStartClicked + 200){
+        screen = 4;
+      }
     }
   }
   
