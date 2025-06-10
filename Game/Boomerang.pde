@@ -53,7 +53,7 @@ class Boomerang{
     
     timer++;
     animate();
-    if (timer < 15 && !returning) {
+    if (timer < 7 && !returning) {
       location.add(velocity);
     }
     else{
