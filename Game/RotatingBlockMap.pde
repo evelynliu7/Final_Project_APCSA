@@ -5,18 +5,16 @@ public class RotatingBlockMap extends Map {
 
   public RotatingBlockMap() {
     super();
-    left = new RotatingBlock(200, 300, 390, 60, 0.02); 
-    right = new RotatingBlock(600, 300, 390, 60, 0.02);
+    left = new RotatingBlock(200, 250, 390, 60, 0.02); 
+    right = new RotatingBlock(600, 250, 390, 60, 0.02);
   }
 
-  @Override
   public void display() {
     super.display();
     left.display();
     right.display();
   }
 
-  @Override
   public void checkCollision(Player player) {
     super.checkCollision(player);
 
@@ -26,7 +24,5 @@ public class RotatingBlockMap extends Map {
     right.setAngle(rightDelayAngle);
     right.update();
 
-    left.applyMovement(player);
-    right.applyMovement(player);
   }
 }
