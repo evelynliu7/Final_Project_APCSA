@@ -5,15 +5,24 @@ public class RotatingBlockMap extends Map {
 
   public RotatingBlockMap() {
     super();
-    left = new RotatingBlock(200, 250, 390, 60, 0.02); 
-    right = new RotatingBlock(600, 250, 390, 60, 0.02);
+    left = new RotatingBlock(250, 250, 180, 30, 0.015); 
+    right = new RotatingBlock(550, 250, 180, 30, 0.015);
     rightDelayAngle = 0;
+    createMap();
   }
 
   public void display() {
     super.display();
     left.display();
     right.display();
+  }
+  
+  public void createMap(){
+    super.obstacles.add(new Wall(350, 20, 100, 50));
+    super.obstacles.add(new Wall(350, 430, 100, 50));
+    
+    super.obstacles.add(new Wall(20, 200, 50, 100));
+    super.obstacles.add(new Wall(730, 200, 50, 100));
   }
 
   public void checkCollision(Player player) {
@@ -31,10 +40,14 @@ public class RotatingBlockMap extends Map {
       player.setpos(PVector.add(player.getpos(), vel));
     }
     
-    if (right.containsPoint(player.getpos().x, player.getpos().y)) {
+    else if (right.containsPoint(player.getpos().x, player.getpos().y)) {
       push(player, right);
       PVector vel = right.getTangentialVelocity(player.getpos().x, player.getpos().y);
       player.setpos(PVector.add(player.getpos(), vel));
+    }
+    
+    else{
+      player.setBeingPushed(false);
     }
   }
 
@@ -76,6 +89,8 @@ public class RotatingBlockMap extends Map {
   
     PVector world = block.toWorld(local);
     player.setpos(world);
+    
+    player.setBeingPushed(true);
   }
 
 

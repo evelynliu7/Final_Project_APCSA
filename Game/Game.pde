@@ -249,7 +249,7 @@ public void checkPickup(Player player, Boomerang boomerang) {
     if (PVector.dist(player.pos, boomerang.getLocation()) < pickupDistance) {
       player.setHasBoomerang(true);
       boomerang.pickupByPlayer();
-      pickUp.play();
+      if(!player.getBeingPushed()) pickUp.play();
     }
   }
 }
