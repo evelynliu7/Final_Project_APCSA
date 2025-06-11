@@ -81,5 +81,11 @@ class Map{
     return false;
   }
   
-
+  public boolean updateTime(PVector pos){
+    return false;
+  }
+  
+  public void resetTiles(){
+    
+  }
 }

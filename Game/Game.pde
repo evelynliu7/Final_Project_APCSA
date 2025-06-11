@@ -3,6 +3,8 @@ SoundFile buttonClick;
 SoundFile boomerangThrow;
 SoundFile pickUp;
 SoundFile teleport;
+SoundFile tileFall;
+SoundFile victory;
 
 char[] arrowKeys = {(char)UP, (char)LEFT, (char)DOWN, (char)RIGHT};
 Player Player1 = new Player(1, arrowKeys, 700, 70);
@@ -12,6 +14,7 @@ Player Player2 = new Player(2, WASD, 70, 430);
 
 int screen=0;
 ArrayList<Map> maps = new ArrayList<Map>();
+Map currMap;
 int timeStartClicked = 0;
 Button start, home, rematch, directions;
 Button Maze, FallingTiles, Spin;
@@ -33,7 +36,7 @@ void setup(){
   
   start = new Button(500, 150, 100, 200, "START", 20);
   directions = new Button(500, 275, 100, 200, "DIRECTIONS", 15);
-  home = new Button(700, 425, 50, 75, "HOME", 15);
+  home = new Button(720, 425, 50, 75, "HOME", 15);
   //rematch =
   Maze = new Button (50, 125, 100, 200, "MAZE", 20);
   FallingTiles = new Button(300, 125, 100, 200, "FALLING TILES", 20);
@@ -43,6 +46,8 @@ void setup(){
   boomerangThrow = new SoundFile(this, "Sounds/BoomerangThrow.mp3");
   pickUp = new SoundFile(this, "Sounds/PickUp.mp3");
   teleport = new SoundFile(this, "Sounds/Teleport.mp3");
+  tileFall = new SoundFile(this, "Sounds/TileFall.mp3");
+  victory = new SoundFile(this, "Sounds/Victory.mp3");
   
   f=createFont("Showcard Gothic", 24);
 }
@@ -52,7 +57,8 @@ void draw(){
     textSize(80);
     fill(255, 102, 125);
     text(winner+" WON!", 400, 200);
-    
+    //Player1.displayLives();
+    //Player2.displayLives();
   }
   else if (screen==0) { //home screen
     background(255, 212, 184);
@@ -110,8 +116,8 @@ void draw(){
       fill(255, 157, 149);
       textSize(20);
       text("A rectangular map composed of square tiles that become darker the", 400, 320);
-      text("longer players stay on them. Once a tile turns black, it will fall,", 400, 370);
-      text("and players cannot stand there anymore.", 400, 420);
+      text("longer players stay on them. Once a tile turns white, it has fallen,", 400, 370);
+      text("and players will die if they try to walk across it.", 400, 420);
     }
     if(Spin.inside(mouseX, mouseY)){
       fill(255, 157, 149);
@@ -124,8 +130,8 @@ void draw(){
   else{    
     background(221, 237, 196);
     //make background specific map
-    Map currMap = maps.get(screen-2);
-    currMap.display();   
+    currMap = maps.get(screen-2);
+    currMap.display();
     
     if(frameCount % Player1.speed == 0){
       Player1.move();
@@ -135,16 +141,20 @@ void draw(){
     checkPickup(Player1, Player1.getBoomerang());
     Player1.display();
     Player1.PlayerBoomerang.display();
-    Player1.displayLives();
+    
     Player1.checkHit(Player2);
     currMap.checkCollision(Player1);
     currMap.checkCollision(Player1.getBoomerang());
     currMap.teleported(Player1);
+    
     if(Player1.dead()){
+      victory.play();
       screen = -1;
       winner = "Player 2";
       loser = "Player 1";
     }
+    
+    Player1.displayLives();
     
     if(frameCount % Player2.speed == 0){
       Player2.move();
@@ -154,29 +164,37 @@ void draw(){
     checkPickup(Player2, Player2.getBoomerang());
     Player2.display();
     Player2.PlayerBoomerang.display();
-    Player2.displayLives();
+    
     Player2.checkHit(Player1);
     currMap.checkCollision(Player2);
     currMap.checkCollision(Player2.getBoomerang());
     currMap.teleported(Player2);
+    
     if(Player2.dead()){
+      victory.play();
       screen = -1;
       winner = "Player 1";
       loser = "Player 2";
     }
     
+    Player2.displayLives();
+    
     home.display();
     
     if(screen == 2){
-      if(currMap.teleported(Player1)) teleport.play();
+      if(currMap.teleported(Player1)){
+        println("Player 1 teleported");
+        teleport.play();
+      }
       if(currMap.teleported(Player2)) teleport.play();
+    }
+    if(screen==3){
+      if(currMap.updateTime(Player1.getpos()) || currMap.updateTime(Player2.getpos())){
+        tileFall.play();
+      }
     }
     
   }
-}
-
-void reset(){
-  
 }
 
 void keyPressed(){
@@ -205,9 +223,7 @@ void checkDoubleClick(char directionKey, Player p){
     p.setKeyTime(millis());
   }
   else{
-    //println(millis() - firstKeyPressTime_p1);
     if(millis() - p.getKeyTime() <= 200 && p.getKeyReleased()){
-      //println("here");
       DoubleClick = true;
       p.setKeyPressed(false);
     }
@@ -292,6 +308,7 @@ void mousePressed() {
       Player2.setlives(3);
       Player1.PlayerBoomerang.resetLoc();
       Player2.PlayerBoomerang.resetLoc();
+      currMap.resetTiles();
       screen = 0;
     }
   }
