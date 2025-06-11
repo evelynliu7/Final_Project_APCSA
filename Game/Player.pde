@@ -10,15 +10,11 @@ class Player{
   private boolean isSlowed = false;
   private int slowStartFrame = 0;
   private int slowDurationFrames = 300; // 5 seconds at 60 FPS
-  
   private int firstKeyPressTime = 0;
   private boolean firstKeyPressed = false, firstKeyReleased = false;
-  
   private boolean allowedUp = true, allowedLeft = true, allowedDown = true, allowedRight = true;
-  
   private int playerWidth, playerHeight;
   private color currC, originalC;
-  
   private int numReturningHits, numForwardHits;
   
   public Player(int character, char[] controls, int xPos, int yPos) {
@@ -35,12 +31,7 @@ class Player{
     numForwardHits = 0;
   }
   
-  void display(){
-    //if(pos.x < 0) pos.x = 0;
-    //if(pos.x > width) pos.x = width;
-    //if(pos.y < 0) pos.y = 0;
-    //if(pos.y < height) pos.y = height;
-    
+  void display(){    
     if(character == 1){
       originalC = 255;
       currC = 255;
@@ -56,6 +47,7 @@ class Player{
     }
     PlayerBoomerang.display();
   }
+  
   void setNumReturning(int n) {
     numReturningHits = n;
   }
@@ -88,17 +80,6 @@ class Player{
     allowedRight = b;
   }
   
-  void move(){
-    if(up && allowedUp) pos.y--;
-    if(left && allowedLeft) pos.x--;
-    if(down && allowedDown) pos.y++;
-    if(right && allowedRight) pos.x++;
-    
-    //WRAP AROUND
-    pos.x += width; pos.x %= width;
-    pos.y += height; pos.y %= height;
-  }
-  
   int getKeyTime(){
     return firstKeyPressTime;
   }
@@ -127,6 +108,38 @@ class Player{
   public boolean hasBoomerang(){
     return hasBoomerang;
   }
+  
+  public Boomerang getBoomerang(){
+    return PlayerBoomerang;
+  }
+  
+  public void setpos(PVector newPos){
+    pos = newPos;
+  }
+  
+  public PVector getpos(){
+    return pos;
+  }
+  
+  public void setlives(int l){
+    lives = l;
+  }
+  public int getLives(){
+    return lives;
+  }
+  
+  void move(){
+    if(up && allowedUp) pos.y--;
+    if(left && allowedLeft) pos.x--;
+    if(down && allowedDown) pos.y++;
+    if(right && allowedRight) pos.x++;
+    
+    //WRAP AROUND
+    pos.x += width; pos.x %= width;
+    pos.y += height; pos.y %= height;
+  }
+  
+  
   public void throwBoomerang(char dir){
     if(isSlowed && frameCount - slowStartFrame > slowDurationFrames){
       isSlowed = false;
@@ -152,18 +165,6 @@ class Player{
       PlayerBoomerang.location = pos.copy(); 
       PlayerBoomerang.move();
     }
-  }
-  
-  public Boomerang getBoomerang(){
-    return PlayerBoomerang;
-  }
-  
-  public void setpos(PVector newPos){
-    pos = newPos;
-  }
-  
-  public PVector getpos(){
-    return pos;
   }
   
   public void checkHit(Player other){
@@ -227,9 +228,11 @@ class Player{
     slowStartFrame = frameCount;
     speed = 1;
   }
+  
   public void updateLives(int num){
     lives += num; 
   }
+  
   public void displayLives(){
     textSize(18);
     fill(255, 102, 125);
@@ -241,24 +244,11 @@ class Player{
     }
   }
   
-  
   public boolean dead(){
     if (lives == 0){
       return true;
     }
     return false;
   }
-  
-  public void setlives(int l){
-    lives = l;
-  }
-  public int getLives(){
-    return lives;
-  }
-  
-  public void applyPowerUp(){
-    
-  }
-  
 
 }
