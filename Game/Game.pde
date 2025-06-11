@@ -145,7 +145,7 @@ void draw(){
     Player1.checkHit(Player2);
     currMap.checkCollision(Player1);
     currMap.checkCollision(Player1.getBoomerang());
-    currMap.teleported(Player1);
+    boolean p1_tp = currMap.teleported(Player1);
     
     if(Player1.dead()){
       victory.play();
@@ -168,7 +168,7 @@ void draw(){
     Player2.checkHit(Player1);
     currMap.checkCollision(Player2);
     currMap.checkCollision(Player2.getBoomerang());
-    currMap.teleported(Player2);
+    boolean p2_tp = currMap.teleported(Player2);
     
     if(Player2.dead()){
       victory.play();
@@ -182,11 +182,9 @@ void draw(){
     home.display();
     
     if(screen == 2){
-      if(currMap.teleported(Player1)){
-        println("Player 1 teleported");
+      if(p1_tp || p2_tp){
         teleport.play();
       }
-      if(currMap.teleported(Player2)) teleport.play();
     }
     if(screen==3){
       if(currMap.updateTime(Player1.getpos()) || currMap.updateTime(Player2.getpos())){

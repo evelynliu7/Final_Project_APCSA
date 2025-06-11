@@ -101,6 +101,7 @@ class MazeMap extends Map{
     //portals
     if(portalLeft.x - 5 <= player.getpos().x && player.getpos().x <= portalLeft.x + 5 && portalLeft.y - 10 <= player.getpos().y && player.getpos().y <= portalLeft.y + 10){
       player.setpos(teleportRight);
+      //println("teleported");
       return true;
     }
     else if(player.getpos().x >= portalRight.x && portalRight.y - 5 <= player.getpos().y && player.getpos().y <= portalRight.y + 5){
