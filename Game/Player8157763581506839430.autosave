@@ -1,0 +1,282 @@
+public class Player {
+  private PVector pos;
+  private Boomerang PlayerBoomerang;
+  private int speed; 
+  private int lives; 
+  private boolean hasBoomerang; 
+  private int character; 
+  private char[] controls; 
+  private boolean up = false, left = false, down = false, right = false;
+  private boolean isSlowed = false;
+  private int slowStartFrame = 0;
+  private int slowDurationFrames = 300; 
+  
+  private int firstKeyPressTime = 0;
+  private boolean firstKeyPressed = false, firstKeyReleased = false;
+  
+  private boolean allowedUp = true, allowedLeft = true, allowedDown = true, allowedRight = true;
+  
+  private int playerWidth, playerHeight;
+  private color currC, originalC;
+  
+  private int numReturningHits, numForwardHits;
+
+  private int hitFlashDuration = 300; 
+  private int hitFlashStartTime = 0;
+  private boolean isHitFlashing = false;
+  
+  public Player(int character, char[] controls, int xPos, int yPos) {
+    this.pos = new PVector(xPos, yPos);
+    this.PlayerBoomerang = new Boomerang(this, 255);
+    this.speed = 1;
+    this.lives = 3;
+    this.hasBoomerang = true;
+    this.character = character;
+    this.controls = controls;
+    playerWidth = 10;
+    playerHeight = 10;
+    numReturningHits = 0;
+    numForwardHits = 0;
+
+    if(character == 1) {
+      originalC = color(255, 255, 255); 
+    } else if(character == 2) {
+      originalC = color(0, 0, 0); 
+    }
+    currC = originalC;
+  }
+  
+  void display() {
+    // Handle hit flash color timing
+    if(isHitFlashing && millis() - hitFlashStartTime < hitFlashDuration) {
+      currC = color(255, 0, 0); // flash red
+    } else {
+      isHitFlashing = false;
+      currC = originalC;
+    }
+    
+    fill(currC);
+    stroke(currC);
+    
+    if(character == 1){
+      circle(pos.x, pos.y, 10);
+    }
+    else if(character == 2){
+      square(pos.x, pos.y, 10);
+    }
+    
+    PlayerBoomerang.display();
+  }
+  
+  void setNumReturning(int n) {
+    numReturningHits = n;
+  }
+  
+  void setNumForward(int n) {
+    numForwardHits = n;
+  }
+  
+  void setUP(boolean b){
+    up = b;
+  }
+  
+  void setLEFT(boolean b){
+    left = b;
+  }
+  
+  void setDOWN(boolean b){
+    down = b;
+  }
+  
+  void setRIGHT(boolean b){
+    right = b;
+  }
+  
+  void setAllowedUp(boolean b){
+    allowedUp = b;
+  }
+  
+  void setAllowedLeft(boolean b){
+    allowedLeft = b;
+  }
+  
+  void setAllowedDown(boolean b){
+    allowedDown = b;
+  }
+  
+  void setAllowedRight(boolean b){
+    allowedRight = b;
+  }
+  
+  void move(){
+    if(up && allowedUp) pos.y -= speed;
+    if(left && allowedLeft) pos.x -= speed;
+    if(down && allowedDown) pos.y += speed;
+    if(right && allowedRight) pos.x += speed;
+    
+    // WRAP AROUND
+    pos.x = (pos.x + width) % width;
+    pos.y = (pos.y + height) % height;
+  }
+  
+  int getKeyTime(){
+    return firstKeyPressTime;
+  }
+  
+  void setKeyTime(int t){
+    firstKeyPressTime = t;
+  }
+  
+  boolean getKeyPressed(){
+    return firstKeyPressed;
+  }
+  
+  void setKeyPressed(boolean b){
+    firstKeyPressed = b;
+  }
+  
+  boolean getKeyReleased(){
+    return firstKeyReleased;
+  }
+  
+  void setKeyReleased(boolean b){
+    firstKeyReleased = b;
+  }
+  
+  public void setHasBoomerang(boolean b){
+    hasBoomerang = b;
+  }
+
+  public boolean hasBoomerang(){
+    return hasBoomerang;
+  }
+  
+  public void throwBoomerang(char dir){
+    // Check if slow effect expired
+    if(isSlowed && frameCount - slowStartFrame > slowDurationFrames){
+      isSlowed = false;
+      speed = 2; // restore speed
+    }
+  
+    if(hasBoomerang){
+      hasBoomerang = false;
+      PlayerBoomerang.setTimer(0);
+      PlayerBoomerang.setReturning(false);
+    
+      float boomerangSpeed = 10;
+    
+      if(dir == 'W' || dir == UP){
+        PlayerBoomerang.setVelocity(new PVector(0, -boomerangSpeed));
+      } else if(dir == 'A' || dir == LEFT){
+        PlayerBoomerang.setVelocity(new PVector(-boomerangSpeed, 0));
+      } else if(dir == 'S' || dir == DOWN){
+        PlayerBoomerang.setVelocity(new PVector(0, boomerangSpeed));
+      } else if(dir == 'D' || dir == RIGHT){
+        PlayerBoomerang.setVelocity(new PVector(boomerangSpeed, 0));
+      }
+      PlayerBoomerang.location = pos.copy(); 
+      PlayerBoomerang.move();
+    }
+  }
+  
+  public Boomerang getBoomerang(){
+    return PlayerBoomerang;
+  }
+  
+  public void setpos(PVector newPos){
+    pos = newPos;
+  }
+  
+  public PVector getpos(){
+    return pos;
+  }
+  
+  public void checkHit(Player other){
+    float otherX = other.getpos().x;
+    float otherY = other.getpos().y;
+    float boomX = PlayerBoomerang.getLocation().x;
+    float boomY = PlayerBoomerang.getLocation().y;
+    boolean forwardHit = false, returningHit = false;
+    if(character == 1){
+      float r = (otherX+5 - boomX)*(otherX+5 - boomX) + (otherY+5 - boomY)*(otherY+5 - boomY);
+      if (r <= 7.5*7.5) {
+        if(PlayerBoomerang.getReturning()){
+          returningHit = true;
+          numReturningHits++;
+        }
+        else{
+          forwardHit = true;
+          numForwardHits++;
+        }
+      }
+    }
+    else if (character == 2){
+      float r = (otherX - boomX)*(otherX - boomX) + (otherY - boomY)*(otherY - boomY);
+      if (r <= 7.5*7.5) {
+        if(PlayerBoomerang.getReturning()){
+          returningHit = true;
+          numReturningHits++;
+        }
+        else{
+          forwardHit = true;
+          numForwardHits++;
+        }
+      }
+    }
+    if(returningHit && numReturningHits <= 1){
+      other.updateLives(-1);
+      other.animateHit();
+      returningHit = false;
+    }
+    else if(forwardHit && numForwardHits <= 1){
+      other.updateLives(-1);
+      other.animateHit();
+      forwardHit = false;
+    }
+  }
+  
+  public void animateHit(){
+    hitFlashStartTime = millis();
+    isHitFlashing = true;
+  }
+  
+  public void slowDown(){
+    isSlowed = true;
+    slowStartFrame = frameCount;
+    speed = 1;
+  }
+  
+  public void updateLives(int num){
+    lives += num; 
+  }
+  
+  public void displayLives(){
+    textSize(18);
+    fill(255, 102, 125);
+    if(controls[0] == 'w'){
+      text("Player 2's lives: " + lives, 710, 490);
+    }
+    else{
+      text("Player 1's lives: " + lives, 90, 490);
+    }
+  }
+  
+  public boolean dead(){
+    return lives <= 0;
+  }
+  
+  public void setlives(int l){
+    lives = l;
+  }
+  
+  public int getLives(){
+    return lives;
+  }
+  
+  public void applyPowerUp(){
+  }
+  
+  public void moveBack(PVector pushBack) {
+    pos.sub(pushBack);
+  }
+}

@@ -59,22 +59,39 @@ class Map{
     
   }
   
-  public void checkCollision(Boomerang boomerang){
-    for (Wall obstacle : obstacles) {
-      PVector nextPos = PVector.add(boomerang.getLocation(), boomerang.getVelocity());
-      float margin = 3;
+ public void checkCollision(Boomerang boomerang){
+  for (Wall obstacle : obstacles) {
+    PVector nextPos = PVector.add(boomerang.getLocation(), boomerang.getVelocity());
+    if (nextPos.x > obstacle.x && nextPos.x < obstacle.x + obstacle.xLen &&
+        nextPos.y > obstacle.y && nextPos.y < obstacle.y + obstacle.yLen) {
       
-      if (nextPos.x > obstacle.x - margin && nextPos.x < obstacle.x + obstacle.xLen + margin &&
-          nextPos.y > obstacle.y - margin && nextPos.y < obstacle.y + obstacle.yLen + margin) {
-          
-          boomerang.setVelocity(new PVector(0, 0));
-          boomerang.setReturning(false);
-          boomerang.setStopped(true);
-          boomerang.setTimer(10000);
-          return;
-      }
+      float distLeft = abs(nextPos.x - obstacle.x);
+      float distRight = abs(obstacle.x + obstacle.xLen - nextPos.x);
+      float distTop = abs(nextPos.y - obstacle.y);
+      float distBottom = abs(obstacle.y + obstacle.yLen - nextPos.y);
+      
+      float minDist = min(distLeft, min(distRight, min(distTop, distBottom)));
+      float clampedX = nextPos.x;
+      float clampedY = nextPos.y;
+      
+      if (minDist == distLeft) clampedX = obstacle.x - 2; 
+      else if (minDist == distRight) clampedX = obstacle.x + obstacle.xLen + 2; 
+      else if (minDist == distTop) clampedY = obstacle.y - 2; 
+      else if (minDist == distBottom) clampedY = obstacle.y + obstacle.yLen + 2; 
+      
+      // Set the boomerang's position and stop it
+      boomerang.setVelocity(new PVector(0, 0));
+      boomerang.setReturning(false);
+      boomerang.setStopped(true);
+      boomerang.setTimer(10000);
+      boomerang.getLocation().set(clampedX, clampedY); 
+      
+      return; 
     }
   }
+}
+
+
   
   public boolean teleported(Player player){
     return false;
