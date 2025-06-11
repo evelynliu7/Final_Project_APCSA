@@ -74,12 +74,13 @@ void draw(){
   else if(screen == 1){ //directions
     background(255, 240, 217);
     fill(255, 157, 149);
-    text("Directions:", 400, 10);
-    
-    text("Welcome to Boomerang Fu, an interactive two-player game!", 400, 40);
-    textSize(12);
-    text("Each player controls a character who can throw and catch a boomerang.", 400, 80);
-    text("Hit your opponent with your boomerang to make them lose a life!", 400, 100);
+    textSize(30);
+    text("Directions:", 400, 20);
+    textSize(22);
+    text("Welcome to Boomerang Fu, an interactive two-player game!", 400, 50);
+    textSize(18);
+    text("Each player controls a character who can throw and catch a boomerang.", 400, 90);
+    text("Hit your opponent with your boomerang to make them lose a life!", 400, 110);
     text("Player 1 moves with arrow keys.", 400, 140);
     text("Double-tap UP arrow to throw the boomerang.", 400, 160);
 
@@ -290,6 +291,7 @@ void mousePressed() {
   
   if(screen>=1){
     if(home.inside(mouseX, mouseY)){
+      reset();
       buttonClicked = true;
       screen = 0;
     }
@@ -298,15 +300,7 @@ void mousePressed() {
   if(screen == -1){
     if(home.inside(mouseX, mouseY)){
       buttonClicked = true;
-      winner = "";
-      loser = "";
-      Player1.setpos(new PVector(700, 70));
-      Player2.setpos(new PVector(70, 430));
-      Player1.setlives(3);
-      Player2.setlives(3);
-      Player1.PlayerBoomerang.resetLoc();
-      Player2.PlayerBoomerang.resetLoc();
-      currMap.resetTiles();
+      reset();
       screen = 0;
     }
   }
@@ -332,4 +326,18 @@ void mousePressed() {
     buttonClick.play();
   }
   
+}
+
+void reset(){
+  winner = "";
+  loser = "";
+  Player1.setpos(new PVector(700, 70));
+  Player2.setpos(new PVector(70, 430));
+  Player1.setlives(3);
+  Player2.setlives(3);
+  Player1.PlayerBoomerang.resetLoc();
+  Player2.PlayerBoomerang.resetLoc();
+  currMap.resetTiles();
+  Player1.setAllowedUp(true); Player1.setAllowedLeft(true); Player1.setAllowedRight(true); Player1.setAllowedDown(true);
+  Player2.setAllowedUp(true); Player2.setAllowedLeft(true); Player2.setAllowedRight(true); Player2.setAllowedDown(true);
 }

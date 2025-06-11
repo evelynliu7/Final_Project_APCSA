@@ -6,7 +6,6 @@ class Player{
   private boolean hasBoomerang; 
   private int character; 
   private char[] controls; 
-  //private PowerUp activePowUp;
   private boolean up = false, left = false, down = false, right = false;
   private boolean isSlowed = false;
   private int slowStartFrame = 0;
