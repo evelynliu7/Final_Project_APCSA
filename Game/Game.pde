@@ -63,7 +63,8 @@ void draw(){
   else if (screen==0) { //home screen
     background(255, 212, 184);
     textFont(f, 50);
-    textAlign(LEFT);
+    textAlign(LEFT, BASELINE);
+    rectMode(CORNER);
     fill(255, 102, 125);
     text("BOOMERANG", 30, 175);
     text("FU", 145, 225);
@@ -179,7 +180,9 @@ void draw(){
     }
     
     Player2.displayLives();
-    
+    resetMatrix();
+    rectMode(CORNER);
+    textAlign(LEFT, BASELINE);
     home.display();
     
     if(screen == 2){
