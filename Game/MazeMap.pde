@@ -98,10 +98,8 @@ class MazeMap extends Map{
    PVector teleportRight = new PVector(portalRight.x - 10, portalRight.y);
    PVector teleportLeft = new PVector(portalLeft.x + 10, portalLeft.y);
     
-    //portals
     if(portalLeft.x - 5 <= player.getpos().x && player.getpos().x <= portalLeft.x + 5 && portalLeft.y - 10 <= player.getpos().y && player.getpos().y <= portalLeft.y + 10){
       player.setpos(teleportRight);
-      //println("teleported");
       return true;
     }
     else if(player.getpos().x >= portalRight.x && portalRight.y - 5 <= player.getpos().y && player.getpos().y <= portalRight.y + 5){

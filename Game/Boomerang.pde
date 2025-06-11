@@ -21,8 +21,7 @@ class Boomerang{
     translate(location.x, location.y);
     rotate(spinAngle);
     
-    fill(c);
-    //circle(0, 0, 10);        
+    fill(c);   
     stroke(255, 0, 0);
     strokeWeight(2);
     
@@ -31,18 +30,10 @@ class Boomerang{
     popMatrix();
   }
   
-  public void updateColor(color newColor){
-    c += newColor;
-    c%=256;
-  }
-  
   public void move(){
-    //figure out how it comes back bc player will move 
-    
     if (stopped){
       return; 
     }
-    
     if (owner.hasBoomerang()){
       location = owner.pos.copy();
       timer = 0;
@@ -50,7 +41,6 @@ class Boomerang{
       returning = false;
       return;
     }
-    
     timer++;
     animate();
     if (timer < 7 && !returning) {
@@ -88,11 +78,9 @@ class Boomerang{
   public PVector getLocation(){
     return location;
   }
-  
   public void setTimer(int t){
     timer = t;
   }
-  
   public void setReturning(boolean b){
     returning = b;
   }
@@ -111,4 +99,8 @@ class Boomerang{
   public void resetLoc(){
     location = owner.pos.copy();
   }
+  public PVector getVelocity(){
+    return velocity;
+  }
+  
 }

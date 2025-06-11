@@ -2,7 +2,6 @@ class Map{
   public ArrayList<Wall> obstacles;
   
   public Map(){
-    //this.spawnPoint = spawn;
     this.obstacles = new ArrayList<Wall>();
   }
   
@@ -30,7 +29,7 @@ class Map{
         collidingR = true;
         player.setAllowedRight(false);
       }
-      if((x-10 >= obstacle.x + obstacle.xLen - 5 && x-10 <= obstacle.x + obstacle.xLen) && (y >= obstacle.y && y <= obstacle.y + obstacle.yLen)){
+      if((x-5 >= obstacle.x + obstacle.xLen - 5 && x-5 <= obstacle.x + obstacle.xLen) && (y >= obstacle.y && y <= obstacle.y + obstacle.yLen)){
         collidingL = true;
         player.setAllowedLeft(false);
       }
@@ -62,8 +61,8 @@ class Map{
   
   public void checkCollision(Boomerang boomerang){
     for (Wall obstacle : obstacles) {
-      PVector nextPos = PVector.add(boomerang.getLocation(), boomerang.velocity);
-      float margin = 3; 
+      PVector nextPos = PVector.add(boomerang.getLocation(), boomerang.getVelocity());
+      float margin = 3;
       
       if (nextPos.x > obstacle.x - margin && nextPos.x < obstacle.x + obstacle.xLen + margin &&
           nextPos.y > obstacle.y - margin && nextPos.y < obstacle.y + obstacle.yLen + margin) {
@@ -86,6 +85,6 @@ class Map{
   }
   
   public void resetTiles(){
-    
   }
+  
 }
