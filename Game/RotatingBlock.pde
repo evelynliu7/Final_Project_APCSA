@@ -1,8 +1,8 @@
 public class RotatingBlock {
-  float x, y;
-  float w, h;
-  float angle;
-  float rotationSpeed;
+  private float x, y;
+  private float w, h;
+  private float angle;
+  private float rotationSpeed;
 
   public RotatingBlock(float x, float y, float w, float h, float rotationSpeed) {
     this.x = x;
@@ -13,11 +13,11 @@ public class RotatingBlock {
     this.rotationSpeed = rotationSpeed;
   }
 
-  void update() {
+  public void update() {
     angle += rotationSpeed;
   }
 
-  void display() {
+  public void display() {
     pushMatrix();
     translate(x, y);
     rotate(angle);
@@ -29,7 +29,7 @@ public class RotatingBlock {
     popMatrix();
   }
 
-  void setAngle(float a) {
+  public void setAngle(float a) {
     angle = a;
   }
 }
