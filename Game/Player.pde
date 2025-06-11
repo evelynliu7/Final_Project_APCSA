@@ -1,7 +1,7 @@
 class Player{
-  public PVector pos;
+  private PVector pos;
   private Boomerang PlayerBoomerang;
-  public int speed; 
+  private int speed; 
   private int lives; 
   private boolean hasBoomerang; 
   private int character; 
@@ -47,16 +47,12 @@ class Player{
       fill(currC);
       stroke(255);
       circle(pos.x, pos.y, 10);
-      playerWidth = 5;
-      playerHeight  = 5;
     }
     else if(character == 2){
       originalC = 0;
       currC = 0;
       fill(currC);
       square(pos.x, pos.y, 10);
-      playerWidth = 12;
-      playerHeight = 12;
     }
     PlayerBoomerang.display();
   }
