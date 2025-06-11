@@ -1,4 +1,4 @@
-class RotatingBlock {
+public class RotatingBlock {
   float x, y;
   float w, h;
   float angle;
