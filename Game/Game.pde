@@ -27,6 +27,9 @@ String winner, loser;
 void setup(){
   size(800, 500);
   
+  String[] fontList = PFont.list();
+  printArray(fontList);
+  
   Map mazeMap = new MazeMap(); //game maze
   maps.add(mazeMap);
   Map fallingTilesMap = new FallingTilesMap();
@@ -49,10 +52,15 @@ void setup(){
   tileFall = new SoundFile(this, "Sounds/TileFall.mp3");
   victory = new SoundFile(this, "Sounds/Victory.mp3");
   
-  f=createFont("Showcard Gothic", 24);
+  f=createFont("Jokerman", 24);
+  //frameRate(5);
 }
 
 void draw(){
+  //if (!Player1.hasBoomerang) {
+  //  println("bruh");
+  //}
+  
   if(screen == -1){ //winner screen
     textSize(80);
     fill(255, 102, 125);
@@ -83,16 +91,16 @@ void draw(){
     text("Each player controls a character who can throw and catch a boomerang.", 400, 90);
     text("Hit your opponent with your boomerang to make them lose a life!", 400, 110);
     text("Player 1 moves with arrow keys.", 400, 140);
-    text("Double-tap UP arrow to throw the boomerang.", 400, 160);
+    text("Double-tap any of these keys to throw the boomerang in that direction.", 400, 160);
 
     text("Player 2 moves with W, A, S, D keys.", 400, 190);
-    text("Double-tap W to throw the boomerang.", 400, 210);
+    text("Double-tap any of these keys to throw the boomerang in that direction.", 400, 210);
 
     text("Boomerang returns unless blocked by a wall.", 400, 250);
     text("If blocked, walk to the boomerang to pick it up.", 400, 270);
 
-    text("Each player starts with 3 lives (hearts).", 400, 310);
-    text("Lose all lives and you lose the game.", 400, 330);
+    text("Each player starts with 6 lives.", 400, 310);
+    text("Lose all lives and you lose the game!", 400, 330);
 
     text("Multiple maps with mazes and hazards will be played.", 400, 370);
     text("Avoid holes and stay within the map boundaries!", 400, 390);
@@ -136,17 +144,20 @@ void draw(){
     currMap.display();
     
     if(frameCount % Player1.speed == 0){
+      currMap.checkCollision(Player1);
       Player1.move();
+      currMap.checkCollision(Player1);
     }
-    
+    currMap.checkCollision(Player1.PlayerBoomerang);
     Player1.PlayerBoomerang.move();
+    currMap.checkCollision(Player1.PlayerBoomerang);
     checkPickup(Player1, Player1.getBoomerang());
     Player1.display();
     Player1.PlayerBoomerang.display();
-    
+    currMap.checkCollision(Player1.PlayerBoomerang);
     Player1.checkHit(Player2);
     currMap.checkCollision(Player1);
-    currMap.checkCollision(Player1.getBoomerang());
+    currMap.checkCollision(Player1.PlayerBoomerang);
     boolean p1_tp = currMap.teleported(Player1);
     
     if(Player1.dead()){
@@ -159,17 +170,19 @@ void draw(){
     Player1.displayLives();
     
     if(frameCount % Player2.speed == 0){
+      currMap.checkCollision(Player2);
       Player2.move();
+      currMap.checkCollision(Player2);
     }
-    
+    currMap.checkCollision(Player2.getBoomerang());
     Player2.PlayerBoomerang.move();
     checkPickup(Player2, Player2.getBoomerang());
     Player2.display();
     Player2.PlayerBoomerang.display();
-    
+    currMap.checkCollision(Player2.getBoomerang());
     Player2.checkHit(Player1);
     currMap.checkCollision(Player2);
-    currMap.checkCollision(Player2.getBoomerang());
+    currMap.checkCollision(Player2.PlayerBoomerang);
     boolean p2_tp = currMap.teleported(Player2);
     
     if(Player2.dead()){
@@ -191,7 +204,7 @@ void draw(){
       }
     }
     if(screen==3){
-      if(currMap.updateTime(Player1.getpos()) || currMap.updateTime(Player2.getpos())){
+      if(currMap.updateTime(Player1.getpos(), Player1.getprevPos()) || currMap.updateTime(Player2.getpos(), Player2.getprevPos())){
         tileFall.play();
       }
     }
@@ -244,7 +257,7 @@ void checkDoubleClick(char directionKey, Player p){
 
 public void checkPickup(Player player, Boomerang boomerang) {
   if (boomerang.isStopped()) {
-    float pickupDistance = 10;  
+    float pickupDistance = 15;  
     
     if (PVector.dist(player.pos, boomerang.getLocation()) < pickupDistance) {
       player.setHasBoomerang(true);
@@ -336,8 +349,8 @@ void reset(){
   loser = "";
   Player1.setpos(new PVector(700, 70));
   Player2.setpos(new PVector(70, 430));
-  Player1.setlives(3);
-  Player2.setlives(3);
+  Player1.setlives(6);
+  Player2.setlives(6);
   Player1.PlayerBoomerang.resetLoc();
   Player2.PlayerBoomerang.resetLoc();
   currMap.resetTiles();

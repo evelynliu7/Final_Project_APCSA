@@ -2,7 +2,6 @@ public class FallingTilesMap extends Map{
   private int[][] grid;
   private int[][] timeStepped;
   private final int SQUARE_SIZE;
-  
   public FallingTilesMap(){
     super();
     SQUARE_SIZE = 20;
@@ -35,18 +34,27 @@ public class FallingTilesMap extends Map{
     
   }
   
-  public boolean updateTime(PVector pos){
+  public boolean updateTime(PVector pos, PVector prevPos){
     boolean re = false;
     int x = (int)pos.x/SQUARE_SIZE;
     int y = (int)pos.y/SQUARE_SIZE;
-    
-    if(millis() - timeStepped[y][x] >= 50){
+    int px = (int)prevPos.x/SQUARE_SIZE;
+    int py = (int)prevPos.y/SQUARE_SIZE;
+    if(millis() - timeStepped[y][x] >= 1000){
+      timeStepped[y][x] = millis();
       grid[y][x]++;
       if(grid[y][x] == 4){
         re = true;
       }
     }
-    timeStepped[y][x] = millis();
+    else if (px!=x || py!=y) {
+      timeStepped[y][x] = millis();
+      grid[y][x]++;
+      if (grid[y][x] == 4) {
+        re = true;
+      }
+    }
+    //timeStepped[y][x] = millis();
     return re;
   }
   

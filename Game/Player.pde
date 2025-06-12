@@ -1,6 +1,6 @@
 public class Player {
-  private PVector pos;
-  private Boomerang PlayerBoomerang;
+  private PVector pos, prevPos;
+  public Boomerang PlayerBoomerang;
   private int speed;
   private int normalSpeed = 2;
   private int lives;
@@ -21,12 +21,12 @@ public class Player {
   private int hitStartTime = 0;
   private int hitDuration = 300;
   private boolean beingPushed = false;
-
   public Player(int character, char[] controls, int xPos, int yPos) {
     this.pos = new PVector(xPos, yPos);
+    this.prevPos = new PVector(xPos, yPos);
     this.PlayerBoomerang = new Boomerang(this, 255);
     this.speed = normalSpeed;
-    this.lives = 3;
+    this.lives = 6;
     this.hasBoomerang = true;
     this.character = character;
     this.controls = controls;
@@ -70,11 +70,12 @@ public class Player {
   }
 
   void move() {
+    this.prevPos = this.pos;
     if (up && allowedUp) pos.y -= speed;
     if (left && allowedLeft) pos.x -= speed;
     if (down && allowedDown) pos.y += speed;
     if (right && allowedRight) pos.x += speed;
-
+    
     pos.x += width;
     pos.x %= width;
     pos.y += height;
@@ -259,7 +260,11 @@ public class Player {
   public PVector getpos() {
     return pos;
   }
-
+  
+  public PVector getprevPos() {
+    return prevPos;
+  }
+  
   public void setlives(int l) {
     lives = l;
   }

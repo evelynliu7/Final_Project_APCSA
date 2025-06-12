@@ -44,9 +44,13 @@ class Boomerang{
     timer++;
     animate();
     if (timer < 7 && !returning) {
+      //println("bruh0", velocity);
+      //println(location.x, location.y);
       location.add(velocity);
+      //println(location.x, location.y);
     }
     else{
+      //println("bruh1");
       returning = true;
       PVector toPlayer = PVector.sub(owner.pos, location);
       toPlayer.setMag(5);
