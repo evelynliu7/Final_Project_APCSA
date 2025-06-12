@@ -5,8 +5,8 @@ public class RotatingBlockMap extends Map {
 
   public RotatingBlockMap() {
     super();
-    left = new RotatingBlock(250, 250, 180, 30, 0.015); 
-    right = new RotatingBlock(550, 250, 180, 30, 0.015);
+    left = new RotatingBlock(250, 250, 180, 30, 0.005); 
+    right = new RotatingBlock(550, 250, 180, 30, 0.005);
     rightDelayAngle = 0;
     createMap();
   }
@@ -35,7 +35,6 @@ public class RotatingBlockMap extends Map {
   
     if (left.containsPoint(player.getpos().x, player.getpos().y)) {
       push(player, left);
-      
       PVector vel = left.getTangentialVelocity(player.getpos().x, player.getpos().y);
       player.setpos(PVector.add(player.getpos(), vel));
     }
@@ -44,10 +43,6 @@ public class RotatingBlockMap extends Map {
       push(player, right);
       PVector vel = right.getTangentialVelocity(player.getpos().x, player.getpos().y);
       player.setpos(PVector.add(player.getpos(), vel));
-    }
-    
-    else{
-      player.setBeingPushed(false);
     }
   }
 
@@ -90,7 +85,6 @@ public class RotatingBlockMap extends Map {
     PVector world = block.toWorld(local);
     player.setpos(world);
     
-    player.setBeingPushed(true);
   }
 
 

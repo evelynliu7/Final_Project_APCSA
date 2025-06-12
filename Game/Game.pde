@@ -27,9 +27,6 @@ String winner, loser;
 void setup(){
   size(800, 500);
   
-  String[] fontList = PFont.list();
-  printArray(fontList);
-  
   Map mazeMap = new MazeMap(); //game maze
   maps.add(mazeMap);
   Map fallingTilesMap = new FallingTilesMap();
@@ -51,6 +48,8 @@ void setup(){
   teleport = new SoundFile(this, "Sounds/Teleport.mp3");
   tileFall = new SoundFile(this, "Sounds/TileFall.mp3");
   victory = new SoundFile(this, "Sounds/Victory.mp3");
+  
+  String[] fontList = PFont.list();
   
   f=createFont("Jokerman", 24);
   //frameRate(5);
@@ -250,7 +249,7 @@ void checkDoubleClick(char directionKey, Player p){
   
   if(DoubleClick){
     p.throwBoomerang(directionKey);
-    boomerangThrow.play();
+    if(screen >= 2) boomerangThrow.play();
   }
   
 }
@@ -260,9 +259,10 @@ public void checkPickup(Player player, Boomerang boomerang) {
     float pickupDistance = 15;  
     
     if (PVector.dist(player.pos, boomerang.getLocation()) < pickupDistance) {
+      if(!player.hasBoomerang()) pickUp.play();
       player.setHasBoomerang(true);
       boomerang.pickupByPlayer();
-      if(!player.getBeingPushed()) pickUp.play();
+      
     }
   }
 }
@@ -307,7 +307,7 @@ void mousePressed() {
   
   if(screen>=1){
     if(home.inside(mouseX, mouseY)){
-      reset();
+      if(screen>1) reset();
       buttonClicked = true;
       screen = 0;
     }

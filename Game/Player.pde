@@ -20,7 +20,7 @@ public class Player {
   private boolean isHit = false;
   private int hitStartTime = 0;
   private int hitDuration = 300;
-  private boolean beingPushed = false;
+  
   public Player(int character, char[] controls, int xPos, int yPos) {
     this.pos = new PVector(xPos, yPos);
     this.prevPos = new PVector(xPos, yPos);
@@ -271,12 +271,5 @@ public class Player {
 
   public int getLives() {
     return lives;
-  }
-  
-  public void setBeingPushed(boolean b){
-    beingPushed = b;
-  }
-  public boolean getBeingPushed(){
-    return beingPushed;
   }
 }
